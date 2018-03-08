@@ -1,3 +1,7 @@
 <resources>
-    <string name="app_name">Health</string>
+    <string name="app_name">RunForHealth</string>
+    <string name="run">跑步</string>
+    <string name="chat">会话</string>
+    <string name="book">通讯录</string>
+    <string name="set">设置</string>
 </resources>

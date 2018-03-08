@@ -1,0 +1,110 @@
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <LinearLayout
+            android:id="@+id/layout_nearby"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:paddingTop="@dimen/border_padding"
+            android:paddingBottom="@dimen/between_control_padding"
+            android:gravity="center|bottom"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_run"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activity_buttom_run"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/run"
+                android:textSize="@dimen/remindOfTextSize"
+                android:gravity="center"
+                android:paddingTop="@dimen/between_control_padding"
+                android:textColor="@drawable/remind_txt_color_exchange"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_chat"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:paddingTop="@dimen/border_padding"
+            android:paddingBottom="@dimen/between_control_padding"
+            android:orientation="vertical">
+            <ImageView
+                android:id="@+id/img_chat"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activity_buttom_chat"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/chat"
+                android:textSize="@dimen/remindOfTextSize"
+                android:gravity="center"
+                android:paddingTop="@dimen/between_control_padding"
+                android:textColor="@drawable/remind_txt_color_exchange"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_book"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/border_padding"
+            android:paddingBottom="@dimen/between_control_padding">
+            <ImageView
+                android:id="@+id/img_book"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activity_buttom_book"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/book"
+                android:textSize="@dimen/remindOfTextSize"
+                android:gravity="center"
+                android:paddingTop="@dimen/between_control_padding"
+                android:textColor="@drawable/remind_txt_color_exchange"/>
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/layout_set"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:gravity="center|bottom"
+            android:orientation="vertical"
+            android:paddingTop="@dimen/border_padding"
+            android:paddingBottom="@dimen/between_control_padding">
+            <ImageView
+                android:id="@+id/img_set"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/activity_buttom_set"/>
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/set"
+                android:textSize="@dimen/remindOfTextSize"
+                android:gravity="center"
+                android:paddingTop="@dimen/between_control_padding"
+                android:textColor="@drawable/remind_txt_color_exchange"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</layout>
+

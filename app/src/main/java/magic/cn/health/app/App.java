@@ -13,7 +13,7 @@ import cn.bmob.newim.BmobIM;
  * @since 2018/3/8
  */
 
-public class BmobIMApplication extends Application {
+public class App extends Application {
 
     @Override
     public void onCreate() {

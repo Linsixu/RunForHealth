@@ -3,6 +3,10 @@ apply plugin: 'com.android.application'
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
+
+    dataBinding {
+        enabled = true
+    }
     defaultConfig {
         applicationId "magic.cn.health"
         minSdkVersion 16
@@ -29,6 +33,9 @@ dependencies {
     testCompile 'junit:junit:4.12'
     compile 'com.android.support.constraint:constraint-layout:1.0.2'
 
+    //noinspection GradleCompatible
+    compile 'com.android.support:recyclerview-v7:24.1.1'
     compile 'cn.bmob.android:bmob-im:2.0.9@aar'
     compile 'cn.bmob.android:bmob-sdk:3.5.6'
+
 }
