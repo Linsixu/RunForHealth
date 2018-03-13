@@ -9,4 +9,16 @@
 
     <color name="normalColor">#e6e6e6</color>
     <color name="white">#ffffff</color>
+
+
+    <color name="base_color_text_gray">#9fa0a0</color>
+
+    <color name="transparent_color">#00000000</color>
+    <color name="text_color_hint">#dddddd</color>
+
+    <color name="base_color_text_black">#3e3e39</color>
+    <color name="yellow">#FFA54F</color>
+
+    <color name="paddingColor">#E5E5E5</color>
+    <color name="black">#111111</color>
 </resources>

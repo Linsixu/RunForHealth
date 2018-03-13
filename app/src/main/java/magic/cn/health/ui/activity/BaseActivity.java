@@ -1,11 +1,15 @@
 package magic.cn.health.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
 import android.view.View;
+import android.widget.Toast;
 
+import magic.cn.health.app.App;
+import magic.cn.health.utils.ActivityCollector;
 import magic.cn.health.utils.MyLog;
 
 /**
@@ -16,7 +20,7 @@ import magic.cn.health.utils.MyLog;
 public abstract class BaseActivity extends AppCompatActivity {
 
     private String TAG = "";
-
+    public App mApplication;
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
@@ -24,13 +28,14 @@ public abstract class BaseActivity extends AppCompatActivity {
 
         TAG = this.getClass().getSimpleName();
 
+        ActivityCollector.addActivity(this);
+
+        mApplication = App.getInstance();
 
         initBind();
 
 
         initView();
-
-        destoryView();
     }
 
 
@@ -60,20 +65,34 @@ public abstract class BaseActivity extends AppCompatActivity {
         MyLog.i(TAG,content);
     }
 
-    public void initToolBar(Toolbar toolbar, String title){
+    public void initToolBar(Toolbar toolbar, String title,boolean isOpenBack){
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null){
+        if(getSupportActionBar() != null && isOpenBack){
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            toolbar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View view) {
+                    toolBarBackListener(view);
+                }
+            });
         }
         toolbar.setTitle(title);
-        toolbar.setNavigationOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
-                toolBarBackListener(view);
-            }
-        });
     }
 
+    public void startActivity(Class<?> activity){
+        Intent intent = new Intent(this, activity);
+        this.startActivity(intent);
+    }
+
+    public void showToast(String info){
+        Toast.makeText(BaseActivity.this,info,Toast.LENGTH_SHORT).show();
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        destoryView();
+    }
 }

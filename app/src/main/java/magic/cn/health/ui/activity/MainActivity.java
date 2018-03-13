@@ -3,9 +3,9 @@ package magic.cn.health.ui.activity;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
+import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.LinearLayout;
-import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -36,6 +36,7 @@ public class MainActivity extends BaseActivity {
 
     private ViewPagerAdapter adapter = null;
 
+    private Toolbar toolbar;
     @Override
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -45,6 +46,8 @@ public class MainActivity extends BaseActivity {
         layoutSet = binding.layoutButtom.layoutSet;
 
         viewPager = binding.viewPagerMain;
+
+        toolbar = binding.toolbar.toolbar;
 
     }
 
@@ -72,6 +75,7 @@ public class MainActivity extends BaseActivity {
             public void onPageSelected(int position) {
                 switch (position){
                     case 0:
+//                        initRunFragment();
                         initRunFragment();
                         break;
                     case 1:
@@ -95,32 +99,36 @@ public class MainActivity extends BaseActivity {
         layoutNearBy.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initRunFragment();
-                Toast.makeText(MainActivity.this,"点击通讯录",Toast.LENGTH_SHORT).show();
+                viewPager.setCurrentItem(0);
+                initTitle("约跑");
+//                Toast.makeText(MainActivity.this,"点击通讯录",Toast.LENGTH_SHORT).show();
             }
         });
 
         layoutChat.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initChatFragment();
-                Toast.makeText(MainActivity.this,"群聊",Toast.LENGTH_SHORT).show();
+                viewPager.setCurrentItem(1);
+                initTitle("聊天");
+//                Toast.makeText(MainActivity.this,"群聊",Toast.LENGTH_SHORT).show();
             }
         });
 
         layoutBook.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initBookFragment();
-                Toast.makeText(MainActivity.this,"点击通讯录",Toast.LENGTH_SHORT).show();
+                viewPager.setCurrentItem(2);
+                initTitle("通讯录");
+//                Toast.makeText(MainActivity.this,"点击通讯录",Toast.LENGTH_SHORT).show();
             }
         });
 
         layoutSet.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                initSetFragment();
-                Toast.makeText(MainActivity.this,"点击设置",Toast.LENGTH_SHORT).show();
+                viewPager.setCurrentItem(3);
+                initTitle("我");
+//                Toast.makeText(MainActivity.this,"点击设置",Toast.LENGTH_SHORT).show();
             }
         });
     }
@@ -140,6 +148,7 @@ public class MainActivity extends BaseActivity {
         layoutChat.setSelected(false);
         layoutNearBy.setSelected(true);
         layoutSet.setSelected(false);
+        initTitle("约跑");
     }
 
 
@@ -148,6 +157,7 @@ public class MainActivity extends BaseActivity {
         layoutChat.setSelected(true);
         layoutNearBy.setSelected(false);
         layoutSet.setSelected(false);
+        initTitle("聊天");
     }
 
     private void initBookFragment(){
@@ -155,15 +165,16 @@ public class MainActivity extends BaseActivity {
         layoutChat.setSelected(false);
         layoutNearBy.setSelected(false);
         layoutSet.setSelected(false);
+        initTitle("通讯录");
     }
 
 
     private void initSetFragment(){
-
         layoutBook.setSelected(false);
         layoutChat.setSelected(false);
         layoutNearBy.setSelected(false);
         layoutSet.setSelected(true);
+        initTitle("我");
     }
 
 
@@ -181,5 +192,10 @@ public class MainActivity extends BaseActivity {
         if(setFragment != null){
             transaction.hide(setFragment);
         }
+    }
+
+    private void initTitle(String title){
+        initToolBar(toolbar,"",false);
+        binding.toolbar.txtTitle.setText(title);
     }
 }

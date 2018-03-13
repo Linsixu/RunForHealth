@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <!--<variable-->
+            <!--name="user"-->
+            <!--type="magic.cn.health.bean.User"/>-->
+        <variable
+            name="presenter"
+            type="magic.cn.health.ui.activity.SearchUserActivity"/>
+        <variable
+            name="searchName"
+            type="String"/>
+    </data>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical">
+        <include layout="@layout/toolbar"
+            android:id="@+id/toolbar"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:padding="@dimen/between_control_padding"
+            android:gravity="center">
+            <EditText
+                android:id="@+id/edit_search_friend"
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="3"
+                android:layout_marginLeft="@dimen/border_padding"
+                android:text="@={searchName}"
+                android:background="@drawable/search_friend_shape"/>
+            <View
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"/>
+            <Button
+                android:id="@+id/btn_search_friend"
+                android:layout_width="0dp"
+                android:layout_height="30sp"
+                android:layout_weight="1"
+                android:background="@drawable/btn_login_selector"
+                android:gravity="center"
+                android:text="@string/search"
+                android:textColor="@color/white"
+                android:layout_marginRight="@dimen/border_padding"
+                android:textSize="@dimen/TextDescription"
+                android:onClick="@{()->presenter.queryUser(searchName)}"/>
+        </LinearLayout>
+
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycleView_search"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white">
+        </android.support.v7.widget.RecyclerView>
+    </LinearLayout>
+</layout>
+

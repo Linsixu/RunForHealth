@@ -2,9 +2,13 @@
 <resources>
     <dimen name="between_control_padding">4dp</dimen>
     <dimen name="border_padding">8dp</dimen>
+    <dimen name="hightest_margintop">18dp</dimen>
 
+    <dimen name="TextTitle">17sp</dimen>
+    <dimen name="titleOfTextSize">14sp</dimen>
+    <dimen name="TextDescription">12sp</dimen>
+    <dimen name="remindOfTextSize">11sp</dimen>
 
-    <dimen name="titleOfTextSize">12sp</dimen>
-    <dimen name="contentOfTextSize">10sp</dimen>
-    <dimen name="remindOfTextSize">8sp</dimen>
+    <dimen name="txtbetweenImgpadding">20sp</dimen>
+
 </resources>

@@ -1,11 +1,75 @@
-<resources>
+<resources xmlns:tools="http://schemas.android.com/tools">
 
     <!-- Base application theme. -->
-    <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
+    <style name="AppTheme" parent="Theme.AppCompat.Light.NoActionBar">
         <!-- Customize your theme here. -->
-        <item name="colorPrimary">@color/colorPrimary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimary">@color/primaryColor</item>
+        <item name="colorPrimaryDark">@color/primaryColor</item>
         <item name="colorAccent">@color/colorAccent</item>
     </style>
 
+    <style name="ToolBarSize">
+        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">match_parent</item>
+    </style>
+
+    <style name="TitleText" parent="TextAppearance.Widget.AppCompat.Toolbar.Title" tools:ignore="DuplicateDefinition">
+        <item name="android:textSize">17sp</item>
+    </style>
+
+    <!-- 聊天列表中消息等一系列小文字-->
+    <style name="my_tv_message_small">
+
+        <item name="android:textSize">12sp</item>
+        <item name="android:textColor">#a7a7a7</item>
+        <item name="android:singleLine">true</item>
+        <item name="android:layout_marginTop">5dp</item>
+
+    </style>
+
+    <style name="my_left_radiobutton">
+
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/radiobutton_bg</item>
+        <item name="android:drawableLeft">@drawable/ic_user_gender_boy</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingLeft">15dp</item>
+
+    </style>
+
+    <style name="my_right_radiobutton">
+
+        <item name="android:button">@null</item>
+        <item name="android:background">@drawable/radiobutton_bg</item>
+        <item name="android:drawableRight">@drawable/ic_user_gender_girl</item>
+        <item name="android:drawablePadding">10dp</item>
+        <item name="android:gravity">center_vertical</item>
+        <item name="android:paddingRight">15dp</item>
+
+    </style>
+
+    <!-- 请求用户的TextView格式-->
+    <!--<style name="Smile">-->
+        <!--<item name="android:layout_width">wrap_content</item>-->
+        <!--<item name="android:layout_height">wrap_content</item>-->
+    <!--</style>-->
+    <!--<style name="Smile.ImageView">-->
+        <!--<item name="android:contentDescription">@string/app_name</item>-->
+    <!--</style>-->
+    <!--<style name="Smile.ImageView.Photo_Middle">-->
+        <!--<item name="android:layout_width">60dp</item>-->
+        <!--<item name="android:layout_height">60dp</item>-->
+        <!--<item name="android:scaleType">fitXY</item>-->
+    <!--</style>-->
+    <style name="SearCh_Item">
+        <item name="android:layout_width">50dp</item>
+        <item name="android:layout_height">50dp</item>
+    </style>
+
+    <style name="PaddingView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">1dp</item>
+        <item name="android:background">@color/paddingColor</item>
+    </style>
 </resources>

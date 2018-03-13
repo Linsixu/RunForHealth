@@ -23,8 +23,7 @@
                 android:text="@string/run"
                 android:textSize="@dimen/remindOfTextSize"
                 android:gravity="center"
-                android:paddingTop="@dimen/between_control_padding"
-                android:textColor="@drawable/remind_txt_color_exchange"/>
+                android:textColor="@drawable/remind_txt_color_selector"/>
 
         </LinearLayout>
 
@@ -49,8 +48,7 @@
                 android:text="@string/chat"
                 android:textSize="@dimen/remindOfTextSize"
                 android:gravity="center"
-                android:paddingTop="@dimen/between_control_padding"
-                android:textColor="@drawable/remind_txt_color_exchange"/>
+                android:textColor="@drawable/remind_txt_color_selector"/>
 
         </LinearLayout>
 
@@ -75,8 +73,7 @@
                 android:text="@string/book"
                 android:textSize="@dimen/remindOfTextSize"
                 android:gravity="center"
-                android:paddingTop="@dimen/between_control_padding"
-                android:textColor="@drawable/remind_txt_color_exchange"/>
+                android:textColor="@drawable/remind_txt_color_selector"/>
 
         </LinearLayout>
 
@@ -101,8 +98,7 @@
                 android:text="@string/set"
                 android:textSize="@dimen/remindOfTextSize"
                 android:gravity="center"
-                android:paddingTop="@dimen/between_control_padding"
-                android:textColor="@drawable/remind_txt_color_exchange"/>
+                android:textColor="@drawable/remind_txt_color_selector"/>
 
         </LinearLayout>
     </LinearLayout>
