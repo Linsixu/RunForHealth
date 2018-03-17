@@ -1,12 +1,146 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="user"
+            type="magic.cn.health.bean.User"/>
+        <variable
+            name="presenter"
+            type="magic.cn.health.ui.fragment.SetFragment"/>
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:background="@color/white">
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="@dimen/border_padding"
+            android:background="@color/paddingColor"/>
+        <RelativeLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="@string/set"/>
+            android:paddingTop="@dimen/border_padding"
+            android:paddingBottom="@dimen/border_padding"
+            android:background="@color/white">
+            <LinearLayout
+                android:id="@+id/layout_user_avatar"
+                style="@style/User_avatar_size"
+                android:background="@color/user_icon_color"
+                android:layout_marginLeft="14dp"
+                android:gravity="center">
+                <ImageView
+                    android:id="@+id/img_user_avatar"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:background="@drawable/icon_head_boy"
+                    android:layout_gravity="center"
+                    app:imageUrl="@{user.getAvatar}"/>
+            </LinearLayout>
+
+            <TextView
+                android:id="@+id/tv_user_nick"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:hint="林思旭"
+                android:text="@{user.getNick}"
+                android:maxEms="10"
+                android:singleLine="true"
+                android:ellipsize="end"
+                android:textSize="@dimen/titleOfTextSize"
+                android:paddingTop="@dimen/between_control_padding"
+                android:paddingLeft="@dimen/border_padding"
+                android:layout_toRightOf="@id/layout_user_avatar" />
+            <TextView
+                android:id="@+id/tv_user_signature"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/layout_user_avatar"
+                android:layout_toEndOf="@id/layout_user_avatar"
+                android:layout_alignBottom="@id/layout_user_avatar"
+                android:hint="我爱你我爱你我爱你我爱你我爱你我爱你我爱你我爱你我爱你"
+                android:text="@{user.getSignature}"
+                android:textSize="@dimen/remindOfTextSize"
+                android:paddingLeft="@dimen/border_padding"
+                android:paddingTop="@dimen/between_control_padding"
+                android:maxEms="15"
+                android:singleLine="true"
+                android:ellipsize="end"/>
+        </RelativeLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="@color/paddingColor"/>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/border_padding">
+            <TextView
+                android:id="@+id/tv_set_run"
+                style="@style/ItemSetUnInfoSize"
+                android:text="@string/sport"
+                android:drawableLeft="@drawable/fragment_set_run" />
+        </LinearLayout>
+        <View
+            style="@style/PaddingView"
+            android:layout_marginLeft="@dimen/border_padding"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/border_padding">
+            <TextView
+                android:id="@+id/tv_set_history"
+                style="@style/ItemSetUnInfoSize"
+                android:text="@string/sportHistory"
+                android:drawableLeft="@drawable/fragment_set_history" />
+        </LinearLayout>
+        <View
+            style="@style/PaddingView"
+            android:layout_marginLeft="@dimen/border_padding"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/border_padding">
+            <TextView
+                android:id="@+id/tv_set_clock"
+                style="@style/ItemSetUnInfoSize"
+                android:text="@string/clock"
+                android:drawableLeft="@drawable/fragment_set_clock" />
+        </LinearLayout>
+        <View
+            style="@style/PaddingView"
+            android:layout_marginLeft="@dimen/border_padding"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/border_padding">
+            <TextView
+                android:id="@+id/tv_set_about"
+                style="@style/ItemSetUnInfoSize"
+                android:text="@string/about"
+                android:drawableLeft="@drawable/fragment_set_about" />
+        </LinearLayout>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="18dp"
+            android:background="@color/paddingColor"/>
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="@dimen/border_padding"
+            android:onClick="@{presenter.exitApp}">
+            <TextView
+                android:id="@+id/tv_set_exit"
+                style="@style/ItemSetUnInfoSize"
+                android:text="@string/exit_app"
+                android:drawableLeft="@drawable/fragment_set_close" />
+        </LinearLayout>
+        <View
+            style="@style/PaddingView"
+            android:layout_marginLeft="@dimen/border_padding"/>
     </LinearLayout>
 </layout>
 

@@ -1,18 +1,26 @@
-package magic.cn.health.utils;
+package magic.cn.health.bean;
 
 import cn.bmob.v3.BmobObject;
-import magic.cn.health.bean.User;
 
 /**
- * Friend表
  * @author 林思旭
- * @since 2018/3/12
+ * @since 2018/3/15
  */
 
-public class Friend extends BmobObject{
-    private User user;
+public class Friend extends BmobObject {
 
+    private User user;
     private User friendUser;
+
+//    private transient String pinyin;
+//
+//    public String getPinyin() {
+//        return pinyin;
+//    }
+//
+//    public void setPinyin(String pinyin) {
+//        this.pinyin = pinyin;
+//    }
 
     public User getUser() {
         return user;

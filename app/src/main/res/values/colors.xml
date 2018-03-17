@@ -21,4 +21,5 @@
 
     <color name="paddingColor">#E5E5E5</color>
     <color name="black">#111111</color>
+    <color name="user_icon_color">#A0D9F6</color>
 </resources>

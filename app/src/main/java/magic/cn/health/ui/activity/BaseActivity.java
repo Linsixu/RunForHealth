@@ -8,6 +8,9 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.Toast;
 
+import org.greenrobot.eventbus.EventBus;
+import org.greenrobot.eventbus.Subscribe;
+
 import magic.cn.health.app.App;
 import magic.cn.health.utils.ActivityCollector;
 import magic.cn.health.utils.MyLog;
@@ -67,10 +70,11 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public void initToolBar(Toolbar toolbar, String title,boolean isOpenBack){
         setSupportActionBar(toolbar);
-        if(getSupportActionBar() != null && isOpenBack){
+        if(getSupportActionBar() != null){
             getSupportActionBar().setHomeButtonEnabled(true);
             getSupportActionBar().setDisplayHomeAsUpEnabled(true);
             getSupportActionBar().setDisplayShowTitleEnabled(false);
+            getSupportActionBar().setDisplayHomeAsUpEnabled(isOpenBack);
             toolbar.setNavigationOnClickListener(new View.OnClickListener() {
                 @Override
                 public void onClick(View view) {
@@ -94,5 +98,23 @@ public abstract class BaseActivity extends AppCompatActivity {
     protected void onDestroy() {
         super.onDestroy();
         destoryView();
+        ActivityCollector.removeActivity(this);
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getDefault().unregister(this);
+        super.onStop();
+    }
+
+    @Subscribe
+    public void onEvent(Boolean empty){
+
     }
 }

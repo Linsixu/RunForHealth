@@ -5,16 +5,18 @@
         android:id="@+id/toolbar"
         android:layout_width="match_parent"
         android:layout_height="?actionBarSize"
-        app:contentInsetStart="0dp"
+        app:navigationIcon="@drawable/back"
+        android:navigationIcon="@drawable/back"
         android:background="@color/primaryColor">
         <!-- contentInsetStart是将左边偏移量变成0，下面才可以真正居中-->
         <TextView
             android:id="@+id/txt_title"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
             android:textColor="@color/white"
             android:textSize="@dimen/TextTitle"
             android:gravity="center"
+            android:layout_gravity="center"
             android:textStyle="normal"/>
     </android.support.v7.widget.Toolbar>
 </layout>

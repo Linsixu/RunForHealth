@@ -14,8 +14,12 @@ import com.nostra13.universalimageloader.utils.StorageUtils;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
+import java.util.ArrayList;
+import java.util.List;
 
 import cn.bmob.newim.BmobIM;
+import magic.cn.health.bean.User;
+import magic.cn.health.service.BmobMessageHandler;
 import magic.cn.health.utils.MyLog;
 import magic.cn.health.utils.SharePreferenceUtil;
 
@@ -32,6 +36,8 @@ public class App extends Application {
 
     private static SharePreferenceUtil mSpUtil;
 
+    private List<User> listFriends;
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -39,9 +45,11 @@ public class App extends Application {
         //TODO 集成：1.8、初始化IM SDK，并注册消息接收器
         if (getApplicationInfo().packageName.equals(getMyProcessName())){
             BmobIM.init(this);
-//            BmobIM.registerDefaultMessageHandler(new DemoMessageHandler());
+            BmobIM.registerDefaultMessageHandler(new BmobMessageHandler(this));
         }
         initImageLoader();
+
+        listFriends = new ArrayList<>();
     }
 
     /**
@@ -106,5 +114,14 @@ public class App extends Application {
                 .writeDebugLogs() // Remove for release app
                 .build();
         ImageLoader.getInstance().init(config);
+    }
+
+    public List<User> getListFriends() {
+        return listFriends;
+    }
+
+    public void setListFriends(List<User> listFriends) {
+        if(this.listFriends.size()!=0)this.listFriends.clear();
+        this.listFriends = listFriends;
     }
 }

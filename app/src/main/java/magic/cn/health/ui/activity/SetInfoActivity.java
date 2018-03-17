@@ -164,6 +164,7 @@ public class SetInfoActivity extends BaseActivity{
                     Intent intent = new Intent(SetInfoActivity.this,RegisterActivity.class);
                     startActivity(intent);
                     ActivityCollector.removeActivity(SetInfoActivity.this);
+                    finish();
                 }else{
                     showToast("不知名错误，请重试");
                 }

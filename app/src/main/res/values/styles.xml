@@ -19,7 +19,6 @@
 
     <!-- 聊天列表中消息等一系列小文字-->
     <style name="my_tv_message_small">
-
         <item name="android:textSize">12sp</item>
         <item name="android:textColor">#a7a7a7</item>
         <item name="android:singleLine">true</item>
@@ -48,23 +47,13 @@
         <item name="android:paddingRight">15dp</item>
 
     </style>
-
-    <!-- 请求用户的TextView格式-->
-    <!--<style name="Smile">-->
-        <!--<item name="android:layout_width">wrap_content</item>-->
-        <!--<item name="android:layout_height">wrap_content</item>-->
-    <!--</style>-->
-    <!--<style name="Smile.ImageView">-->
-        <!--<item name="android:contentDescription">@string/app_name</item>-->
-    <!--</style>-->
-    <!--<style name="Smile.ImageView.Photo_Middle">-->
-        <!--<item name="android:layout_width">60dp</item>-->
-        <!--<item name="android:layout_height">60dp</item>-->
-        <!--<item name="android:scaleType">fitXY</item>-->
-    <!--</style>-->
+    <style name="item_send_or_agree_button">
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_width">34dp</item>
+    </style>
     <style name="SearCh_Item">
-        <item name="android:layout_width">50dp</item>
-        <item name="android:layout_height">50dp</item>
+        <item name="android:layout_width">42dp</item>
+        <item name="android:layout_height">42dp</item>
     </style>
 
     <style name="PaddingView">
@@ -72,4 +61,21 @@
         <item name="android:layout_height">1dp</item>
         <item name="android:background">@color/paddingColor</item>
     </style>
+
+    <style name="User_avatar_size">
+        <item name="android:layout_width">58dp</item>
+        <item name="android:layout_height">58dp</item>
+    </style>
+    
+    <style name="ItemSetUnInfoSize">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">48dp</item>
+        <item name="android:gravity">left|center</item>
+        <item name="android:textSize">@dimen/TextDescription</item>
+        <item name="android:paddingTop">@dimen/between_control_padding</item>
+        <item name="android:paddingBottom">@dimen/between_control_padding</item>
+        <item name="android:layout_marginLeft">@dimen/border_padding</item>
+        <item name="android:drawablePadding">18dp</item>
+    </style>
+
 </resources>

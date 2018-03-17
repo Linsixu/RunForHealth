@@ -12,4 +12,9 @@
     <string name="new_friends">新的朋友</string>
     <string name="add_friends">添加好友</string>
     <string name="search">搜索</string>
+    <string name="sport">发起运动</string>
+    <string name="sportHistory">运动记录</string>
+    <string name="about">关于我们</string>
+    <string name="clock">消息提示</string>
+    <string name="exit_app">退出登陆</string>
 </resources>

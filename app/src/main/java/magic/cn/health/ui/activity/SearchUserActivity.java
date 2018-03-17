@@ -3,10 +3,12 @@ package magic.cn.health.ui.activity;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.Toolbar;
+import android.text.TextUtils;
 import android.view.View;
 
 import java.util.List;
 
+import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
 import magic.cn.health.R;
@@ -39,12 +41,19 @@ public class SearchUserActivity extends BaseActivity {
 
         toolbar = binding.toolbar.toolbar;
 
-        binding.recycleViewSearch.setLayoutManager(new LinearLayoutManager(this));
-        initTitle("添加好友");
 
 //        user.setNick("林思旭");
 //        user2.setNick("林泽伟");
 //        user2.setSex(false);
+
+
+    }
+
+    @Override
+    protected void initView() {
+        binding.recycleViewSearch.setLayoutManager(new LinearLayoutManager(this));
+
+        initTitle("添加好友");
 
         adapter = new SearchAdapter(this);
 
@@ -57,15 +66,17 @@ public class SearchUserActivity extends BaseActivity {
         binding.recycleViewSearch.setAdapter(adapter);
 
         adapter.setListener(new SearchAdapter.onItemClickListener() {
+
             @Override
-            public void onClick(View view) {
-                showToast("添加好友");
+            public void onClick(BmobIMMessage bmobIMMessage, BmobException e) {
+                if(e == null){
+                    showToast("好友请求发送成功，等待验证");
+                }else {//发送失败
+                    showToast("发送失败:" + e.getMessage());
+                }
+                showLog("e="+e+","+"bmobIMMessage="+bmobIMMessage);
             }
         });
-    }
-
-    @Override
-    protected void initView() {
     }
 
     @Override
@@ -84,6 +95,10 @@ public class SearchUserActivity extends BaseActivity {
     }
 
     public void queryUser(final String name){
+        if(TextUtils.isEmpty(name)){
+            showToast("不能输入空用户名");
+            return;
+        }
         showLog("name="+name);
 //        final List<User> listUser = new ArrayList<>();
         adapter.deleteAll();

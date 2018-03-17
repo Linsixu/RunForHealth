@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <ImageView
+            android:id="@+id/img_new_friend_avatar"
+            style="@style/SearCh_Item"
+            android:scaleType="fitXY"
+            android:background="@drawable/icon_head_boy"
+            android:layout_alignParentLeft="true"
+            android:layout_margin="@dimen/border_padding"/>
+        <TextView
+            android:id="@+id/txt_new_friend_name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="林思旭"
+            android:layout_alignTop="@+id/img_new_friend_avatar"
+            android:layout_toRightOf="@+id/img_new_friend_avatar"
+            android:textSize="@dimen/titleOfTextSize"/>
+        <!--<TextView-->
+            <!--android:id="@+id/txt_new_friend_time"-->
+            <!--android:layout_width="wrap_content"-->
+            <!--android:layout_height="wrap_content"-->
+            <!--android:hint="时间"-->
+            <!--android:textSize="@dimen/remindOfTextSize"-->
+            <!--android:layout_below="@+id/txt_new_friend_name"-->
+            <!--android:layout_toRightOf="@+id/img_new_friend_avatar"-->
+            <!--android:layout_toEndOf="@+id/img_new_friend_avatar" />-->
+        <TextView
+            android:id="@+id/txt_new_friend_say"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:hint="我是你的好朋友,我是你的好朋友,我是你的好朋友,我是你的好朋友,我是你的好朋友，我是你的好朋友"
+            android:textSize="@dimen/remindOfTextSize"
+            android:layout_alignBottom="@+id/img_new_friend_avatar"
+            android:layout_toRightOf="@+id/img_new_friend_avatar"
+            android:layout_toEndOf="@+id/img_new_friend_avatar"
+            android:singleLine="true"
+            android:maxEms="10"
+            android:ellipsize="end"/>
+
+        <Button
+            android:id="@+id/btn_agree"
+            android:layout_width="wrap_content"
+            android:layout_height="34dp"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"
+            android:layout_marginRight="11dp"
+            android:background="@drawable/btn_login_selector"
+            android:paddingLeft="12dp"
+            android:paddingRight="12dp"
+            android:text="同意"
+            android:textColor="@color/white"
+            android:textSize="14sp" />/>
+        <View
+            style="@style/PaddingView"
+            android:layout_below="@id/img_new_friend_avatar"/>
+    </RelativeLayout>
+</layout>

@@ -12,8 +12,14 @@ import android.widget.Button;
 import java.util.ArrayList;
 import java.util.List;
 
+import cn.bmob.newim.bean.BmobIMMessage;
+import cn.bmob.newim.listener.MessageSendListener;
+import cn.bmob.v3.exception.BmobException;
 import magic.cn.health.R;
+import magic.cn.health.app.App;
 import magic.cn.health.bean.User;
+import magic.cn.health.model.UserModel;
+import magic.cn.health.utils.MyLog;
 
 /**
  * @author 林思旭
@@ -21,6 +27,7 @@ import magic.cn.health.bean.User;
  */
 
 public class SearchAdapter extends RecyclerView.Adapter<BindingViewHolder> {
+    private String TAG = "SearchAdapter";
 
     private static final int ITEM_VIEW_TYPE_BOY = 1;
     private static final int ITEM_VIEW_TYPE_GIRL = 2;
@@ -31,11 +38,14 @@ public class SearchAdapter extends RecyclerView.Adapter<BindingViewHolder> {
 
     private List<User> userList;
 
+    private Context context;
+
     public interface onItemClickListener{
-        void onClick(View view);
+        void onClick(BmobIMMessage bmobIMMessage, BmobException e);
     }
 
     public SearchAdapter(Context context) {
+        this.context = context;
         mLayoutInflater = (LayoutInflater)context.getSystemService(
                 Context.LAYOUT_INFLATER_SERVICE);
 
@@ -56,17 +66,29 @@ public class SearchAdapter extends RecyclerView.Adapter<BindingViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BindingViewHolder holder, int position) {
+    public void onBindViewHolder(BindingViewHolder holder, final int position) {
         final User user = userList.get(position);
         holder.getBinding().setVariable(magic.cn.health.BR.user,user);
         holder.getBinding().executePendingBindings();
-        Button btn_search = holder.itemView.findViewById(R.id.btn_add);
-        btn_search.setOnClickListener(new View.OnClickListener() {
+        final Button btn_add = holder.itemView.findViewById(R.id.btn_add);
+        final List<User> friends = App.getInstance().getListFriends();
+        MyLog.i(TAG,"isTrue="+friends.contains(user));
+        if(friends.contains(user) && friends.size() != 0){
+            btn_add.setEnabled(false);
+            btn_add.setText("已添加");
+            btn_add.setBackgroundDrawable(null);
+            btn_add.setTextColor(context.getResources().getColor(R.color.base_color_text_black));
+        }
+        btn_add.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                if(listener != null){
-                    listener.onClick(view);
-                }
+                UserModel.getModelInstance().sendAddFriendMessgae(user, new MessageSendListener() {
+                    @Override
+                    public void done(BmobIMMessage bmobIMMessage, BmobException e) {
+                        listener.onClick(bmobIMMessage,e);
+//                       MyLog.i(TAG,"e="+e+","+"bmobIMMessage="+bmobIMMessage);
+                    }
+                });
             }
         });
     }

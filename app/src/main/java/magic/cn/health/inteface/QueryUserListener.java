@@ -14,6 +14,6 @@ public abstract class QueryUserListener extends BmobListener1<User> {
 
     @Override
     protected void postDone(User user, BmobException e) {
-
+        done(user,e);
     }
 }

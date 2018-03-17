@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <dimen name="between_control_padding">4dp</dimen>
-    <dimen name="border_padding">8dp</dimen>
+    <dimen name="between_control_padding">6dp</dimen>
+    <dimen name="border_padding">10dp</dimen>
     <dimen name="hightest_margintop">18dp</dimen>
 
     <dimen name="TextTitle">17sp</dimen>

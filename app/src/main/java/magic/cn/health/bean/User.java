@@ -35,7 +35,11 @@ public class User extends BmobUser{
 
     public User(){}
 
-
+    public User(NewFriend friend){
+        setObjectId(friend.getUid());
+        setUsername(friend.getName());
+        setAvatar(friend.getAvatar());
+    }
     public String getAgainPwd() {
         return againPwd;
     }
@@ -126,5 +130,14 @@ public class User extends BmobUser{
                 ", height='" + height + '\'' +
                 ", weight='" + weight + '\'' +
                 '}';
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj instanceof User) {
+            User u = (User) obj;
+            return this.getObjectId().equals(u.getObjectId());
+        }
+        return super.equals(obj);
     }
 }

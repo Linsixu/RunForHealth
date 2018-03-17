@@ -54,5 +54,7 @@
                 android:textSize="14sp" />
         </RelativeLayout>
 
+        <View
+            style="@style/PaddingView"/>
     </LinearLayout>
 </layout>

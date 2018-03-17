@@ -14,6 +14,6 @@ public abstract class UpdateCacheListener extends BmobListener1 {
 
     @Override
     protected void postDone(Object o, BmobException e) {
-
+        done(e);
     }
 }
