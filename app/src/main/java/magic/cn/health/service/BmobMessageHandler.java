@@ -119,6 +119,7 @@ public class BmobMessageHandler extends BmobIMMessageHandler{
             NewFriend friend = AgreeAddFriendMessage.convertFriend(msg);
             if(friend.getStatus() == Appconfig.STATUS_VERIFIED){
                 //已经添加了好友，不需要再显示了
+                NewFriendManager.getInstance(context).insertOrUpdateNewFriend(friend);//林思旭加
                 return;
             }
             showAgreeNotify(info, agree);

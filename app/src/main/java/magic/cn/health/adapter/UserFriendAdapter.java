@@ -15,6 +15,7 @@ import java.util.List;
 
 import magic.cn.health.R;
 import magic.cn.health.bean.User;
+import magic.cn.health.model.StartModel;
 import magic.cn.health.utils.MyLog;
 
 /**
@@ -28,7 +29,11 @@ public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder> {
 
     private LayoutInflater inflater;
 
+    private StartModel startModel;
+
     public UserFriendAdapter(Context context) {
+        startModel = new StartModel(context);
+
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         listUser = new ArrayList<>();
@@ -45,6 +50,7 @@ public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder> {
     public void onBindViewHolder(BindingViewHolder holder, int position) {
         final User user = listUser.get(position);
         holder.getBinding().setVariable(magic.cn.health.BR.user,user);
+        holder.getBinding().setVariable(magic.cn.health.BR.presenter,startModel);
         holder.getBinding().executePendingBindings();
 
         TextView tv_alpha = holder.itemView.findViewById(R.id.tv_alpha);

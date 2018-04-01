@@ -50,5 +50,4 @@ public class CommonUtils {
 		else
 			return false;
 	}
-
 }

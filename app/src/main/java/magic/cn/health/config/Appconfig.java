@@ -65,4 +65,25 @@ public class Appconfig {
 	public static final int STATUS_VERIFY_REFUSE = 3;
 	//好友请求：我发出的好友请求-暂未存储到本地数据库中
 	public static final int STATUS_VERIFY_ME_SEND = 4;
+
+
+
+	public static int TYPE_CLOSE = 11;
+	public static int TYPE_OEPN_SMILE = 12;
+	public static int TYPE_CLOSE_SMILE = -12;
+	public static int TYPE_OPEN_KEYBOARD = 13;
+	public static int TYPE_CLOSE_KEYBOARD = -13;
+	public static int TYPE_OPEN_FUCTION = 14;
+	public static int TYPE_CLOSE_FUNCTION = -14;
+	public static int TYPE_DELAY_SHOW_SMILE = 15;
+	public static int TYPE_DELAY_SHOW_FUNCTION = -15;
+
+	public static int TYPE_OPEN_SMILE_AND_CLOSE_KEYBOARD = 16;
+	public static int TYPE_OPEN_KEYBOARD_AND_CLOSE_SMILE = 17;
+
+	public static int TYPE_OPEN_FUNCTION_AND_CLOSE_KEYBOARD = 18;
+	public static int TYPE_OPEN_KEYBOARD_AND_CLOSE_FUNCTION = 19;
+
+	public static int TYPE_OPEN_SMILE_AND_CLOSE_FUNCTION = 20;
+	public static int TYPE_OPEN_FUNCTION_AND_CLOSE_SMILE = 21;
 }

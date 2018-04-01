@@ -22,4 +22,11 @@
     <color name="paddingColor">#E5E5E5</color>
     <color name="black">#111111</color>
     <color name="user_icon_color">#A0D9F6</color>
+    <color name="color_b4">#b4b4b4</color>
+    <color name="chat_buttom_color">#F4F4F6</color>
+    <color name="chat_content_color">#EBEBEB</color>
+    <color name="chat_edit_color">#FCFCFC</color>
+    <color name="chat_voice_short_color">#757575</color>
+
+    <color name="color_msg_system_time_bg">#20000000</color>
 </resources>

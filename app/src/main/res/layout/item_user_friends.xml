@@ -5,10 +5,14 @@
         <variable
             name="user"
             type="magic.cn.health.bean.User"/>
+        <variable
+            name="presenter"
+            type="magic.cn.health.model.StartModel"/>
     </data>
     <!--林思旭 2016.4.8 -->
     <RelativeLayout android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:onClick="@{()->presenter.jumpToChatActivity(user)}">
         <TextView
             android:id="@+id/tv_alpha"
             android:layout_width="match_parent"

@@ -117,4 +117,11 @@ public abstract class BaseActivity extends AppCompatActivity {
     public void onEvent(Boolean empty){
 
     }
+
+    public Bundle getBundle() {
+        if (getIntent() != null && getIntent().hasExtra(getPackageName()))
+            return getIntent().getBundleExtra(getPackageName());
+        else
+            return null;
+    }
 }

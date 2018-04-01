@@ -65,6 +65,7 @@ public class NewFriendsActivity extends BaseActivity {
 
     @Override
     protected void toolBarBackListener(View view) {
+        setResult(2);
         finish();
     }
     private void initTitle(String title){

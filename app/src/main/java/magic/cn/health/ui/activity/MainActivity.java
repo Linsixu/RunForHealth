@@ -82,7 +82,8 @@ public class MainActivity extends BaseActivity {
         viewPager.setAdapter(adapter);
 
         viewPager.setCurrentItem(0);
-        initTitle("约跑");
+        initRunFragment();
+
 
         viewPager.setOnPageChangeListener(new ViewPager.OnPageChangeListener() {
             @Override
@@ -262,7 +263,7 @@ public class MainActivity extends BaseActivity {
         //重新刷新列表
         showLog("---Main---");
         bookFragment.setNewMessage(true);
-        bookFragment.setNeedRefresh(true);
+//        bookFragment.setNeedRefresh(true);
     }
 
 }

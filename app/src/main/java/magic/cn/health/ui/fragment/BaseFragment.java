@@ -1,5 +1,7 @@
 package magic.cn.health.ui.fragment;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -66,5 +68,17 @@ public abstract class BaseFragment extends Fragment {
 
     public void showLog(String content){
         MyLog.i(TAG,content);
+    }
+
+    /**启动指定Activity
+     * @param target
+     * @param bundle
+     */
+    public void startActivity(Class<? extends Activity> target, Bundle bundle) {
+        Intent intent = new Intent();
+        intent.setClass(getActivity(), target);
+        if (bundle != null)
+            intent.putExtra(getActivity().getPackageName(), bundle);
+        getActivity().startActivity(intent);
     }
 }

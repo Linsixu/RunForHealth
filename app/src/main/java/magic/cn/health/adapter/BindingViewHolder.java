@@ -12,6 +12,8 @@ public class BindingViewHolder<T extends ViewDataBinding> extends RecyclerView.V
 
     private T mBinding;
 
+    private int layoutId;
+
     public BindingViewHolder(T binding) {
         super(binding.getRoot());
         mBinding = binding;
@@ -19,5 +21,13 @@ public class BindingViewHolder<T extends ViewDataBinding> extends RecyclerView.V
 
     public T getBinding(){
         return mBinding;
+    }
+
+    public int getLayoutId() {
+        return layoutId;
+    }
+
+    public void setLayoutId(int layoutId) {
+        this.layoutId = layoutId;
     }
 }

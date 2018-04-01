@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_record_short"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@color/chat_voice_short_color"
+    android:alpha="0.5"
+    android:padding="10dp">
+
+    <ImageView
+        android:id="@+id/iv_short"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="@dimen/border_padding"
+        android:contentDescription="Settings"
+        android:scaleType="fitXY"
+        android:src="@drawable/include_chat_voice_short" />
+
+    <TextView
+        android:layout_height="wrap_content"
+        android:layout_width="wrap_content"
+        android:layout_below="@id/iv_short"
+        android:layout_centerHorizontal="true"
+        android:text="说话时间太短"
+        android:textColor="@color/white"
+        android:layout_marginLeft="@dimen/border_padding"
+        android:layout_marginRight="@dimen/border_padding"
+        android:textSize="@dimen/TextDescription" />
+
+</RelativeLayout>

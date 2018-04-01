@@ -10,5 +10,7 @@
     <dimen name="remindOfTextSize">11sp</dimen>
 
     <dimen name="txtbetweenImgpadding">20sp</dimen>
+    <dimen name="margin_chat_top">5.0dip</dimen>
+    <dimen name="base_scrollview_top_height">50.0dip</dimen>
 
 </resources>

@@ -50,9 +50,11 @@ public class BookFragment extends BaseFragment {
 
     private UserFriendAdapter adapter;
 
-    private boolean isNeedRefresh = true;
-
     private Dialog dialog;
+
+    private boolean isRefresh = true;
+
+    private final static int REQUEST_NEWFRIEND_CODE = 1; // 返回的结果码
 
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container) {
@@ -81,8 +83,10 @@ public class BookFragment extends BaseFragment {
             @Override
             public void onClick(View view) {
                 isNewMessage = false;
+//                Intent intent = new Intent(getActivity(), NewFriendsActivity.class);
+//                getActivity().startActivity(intent);
                 Intent intent = new Intent(getActivity(), NewFriendsActivity.class);
-                getActivity().startActivity(intent);
+                startActivityForResult(intent,REQUEST_NEWFRIEND_CODE);
             }
         });
 
@@ -90,6 +94,8 @@ public class BookFragment extends BaseFragment {
 
         dialog = showDialog();
         dialog.setCanceledOnTouchOutside(false);
+
+        dialog.show();
     }
 
     @Override
@@ -100,12 +106,23 @@ public class BookFragment extends BaseFragment {
     @Override
     public void onResume() {
         super.onResume();
+        if(isRefresh || isNewMessage)query();
         if(isNewMessage || NewFriendManager.getInstance(getActivity()).hasNewFriendInvitation()){
             binding.imgNewMessage.setVisibility(View.VISIBLE);
         }else {
             binding.imgNewMessage.setVisibility(View.GONE);
         }
     }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if(resultCode == 2 && requestCode == REQUEST_NEWFRIEND_CODE){
+            isRefresh = true;
+            showLog("onResult");
+        }
+    }
+
     public void setNewMessage(boolean newMessage) {
         isNewMessage = newMessage;
     }
@@ -120,47 +137,49 @@ public class BookFragment extends BaseFragment {
                     @Override
                     public void done(List<User> list, BmobException e) {
                         if (e == null && list.size() != 0) {
-                            isNeedRefresh = false;//不需要再刷新
-                            listUser.clear();
-                            listUser.addAll(list);
-                            // 根据a-z进行排序(排序成功)
-                            Collections.sort(listUser, new Comparator<User>() {
-                                @Override
-                                public int compare(User lhs, User rhs) {
-                                    // TODO Auto-generated method stub
-                                    return lhs.getSortLetters().compareToIgnoreCase(rhs.getSortLetters());
-                                }
-                            });
-                            EventBus.getDefault().post(new NewFriendsEvent());
-                            showLog("listUser="+listUser.size());
+                            if(listUser.size() != list.size()){
+                                isRefresh = true;
+                                listUser = new ArrayList<>();//listUser.clear再添加会出现问题
+                                listUser.addAll(list);
+                                // 根据a-z进行排序(排序成功)
+                                Collections.sort(listUser, new Comparator<User>() {
+                                    @Override
+                                    public int compare(User lhs, User rhs) {
+                                        // TODO Auto-generated method stub
+                                        return lhs.getSortLetters().compareToIgnoreCase(rhs.getSortLetters());
+                                    }
+                                });
+                                EventBus.getDefault().post(new NewFriendsEvent());
+                                showLog("listUser="+listUser.size());
+                            }else{
+                                isRefresh = false;
+                            }
+                            showLog("list="+list.size());
                         }else{
                             EventBus.getDefault().post(new NewFriendsEvent());
                             showLog("无好友");
+                            isRefresh = false;
                         }
                     }
                 }
         );
     }
 
-    @Override
-    public void onStart() {
-        super.onStart();
-        showLog("start");
-        if(isNeedRefresh){
-            dialog.show();
-            query();
-        }
-    }
+//    @Override
+//    public void onStart() {
+//        super.onStart();
+//        showLog("start");
+//        if(isNeedRefresh){
+//            dialog.show();
+//            query();
+//        }
+//    }
 
     @Subscribe(threadMode  = ThreadMode.MAIN)
     public void getFriends(NewFriendsEvent event){
         adapter.addAll(listUser);
-        dialog.dismiss();
+        if(dialog.isShowing())dialog.dismiss();
         App.getInstance().setListFriends(listUser);//缓存好友到App中
-    }
-
-    public void setNeedRefresh(boolean needRefresh) {
-        isNeedRefresh = needRefresh;
     }
 
     private Dialog showDialog(){
@@ -168,4 +187,7 @@ public class BookFragment extends BaseFragment {
         builder.setTitle("提示").setMessage("正在获取好友列表");
         return builder.create();
     }
+
+
+
 }
