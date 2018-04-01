@@ -58,6 +58,7 @@ public class ChatFragment extends BaseFragment {
         });
         binding.rcView.setLayoutManager(new LinearLayoutManager(getActivity()));
 
+
         binding.rcView.setAdapter(adapter);
     }
 
