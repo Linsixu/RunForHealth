@@ -9,7 +9,6 @@ import android.view.View;
 import magic.cn.health.R;
 import magic.cn.health.bean.User;
 import magic.cn.health.databinding.ActivityRegisterBinding;
-import magic.cn.health.model.RegisterModel;
 
 /**
  * @author 林思旭
@@ -19,12 +18,9 @@ import magic.cn.health.model.RegisterModel;
 public class RegisterActivity extends BaseActivity {
 
     ActivityRegisterBinding databinding;
-
-    private RegisterModel registerModel;
     private User user;
     @Override
     protected void initBind() {
-        registerModel = new RegisterModel(this);
 
         databinding = DataBindingUtil.setContentView(this, R.layout.activity_register);
     }
@@ -34,8 +30,6 @@ public class RegisterActivity extends BaseActivity {
         user = new User();
 
         databinding.setUser(user);
-
-        databinding.setRegisterModel(registerModel);
 
         databinding.btnNextstep.setOnClickListener(new View.OnClickListener() {
             @Override

@@ -1,5 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="msg"
+            type="cn.bmob.newim.bean.BmobIMMessage"/>
+
+        <import type="android.view.View"/>
+        <variable
+            name="isShowTime"
+            type="Boolean" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,7 +23,9 @@
             android:id="@+id/tv_time"
             style="@style/chat_text_date_style"
             android:layout_width="wrap_content"
-            android:layout_height="wrap_content"/>
+            android:layout_height="wrap_content"
+            app:data="@{msg.getCreateTime}"
+            android:visibility="@{isShowTime ? View.VISIBLE:View.GONE}"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,7 +41,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="@dimen/margin_chat_top"
                 android:background="@drawable/icon_head_boy"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                app:loadIcon="@{msg}"/>
 
             <ImageView
                 android:id="@+id/iv_picture"
@@ -44,9 +58,8 @@
                 android:paddingLeft="5dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
-                android:paddingRight="25dp"
-                android:adjustViewBounds="true"
-                />
+                android:paddingRight="15dp"
+                android:adjustViewBounds="true"/>
 
             <ImageView
                 android:id="@+id/iv_fail_resend"

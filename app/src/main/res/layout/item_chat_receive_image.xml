@@ -1,5 +1,15 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <data>
+        <variable
+            name="msg"
+            type="cn.bmob.newim.bean.BmobIMMessage"/>
+        <import type="android.view.View"/>
+        <variable
+            name="isShowTime"
+            type="Boolean" />
+    </data>
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -12,7 +22,9 @@
             style="@style/chat_text_date_style"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_gravity="center" />
+            android:layout_gravity="center"
+            app:data="@{msg.getCreateTime}"
+            android:visibility="@{isShowTime ? View.VISIBLE:View.GONE}"/>
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -28,7 +40,8 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/margin_chat_top"
                 android:background="@drawable/icon_head_boy"
-                android:scaleType="fitXY" />
+                android:scaleType="fitXY"
+                app:loadIcon="@{msg}"/>
 
             <ImageView
                 android:id="@+id/iv_picture"
@@ -37,7 +50,7 @@
                 android:layout_height="wrap_content"
                 android:maxWidth="150dip"
                 android:maxHeight="150dp"
-                android:paddingLeft="25dp"
+                android:paddingLeft="15dp"
                 android:paddingBottom="5dp"
                 android:paddingTop="5dp"
                 android:paddingRight="5dp"

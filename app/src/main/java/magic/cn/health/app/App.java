@@ -2,6 +2,8 @@ package magic.cn.health.app;
 
 import android.app.Application;
 
+import com.baidu.location.LocationClient;
+import com.baidu.location.LocationClientOption;
 import com.nostra13.universalimageloader.cache.disc.impl.UnlimitedDiskCache;
 import com.nostra13.universalimageloader.cache.disc.naming.FileNameGenerator;
 import com.nostra13.universalimageloader.cache.disc.naming.Md5FileNameGenerator;
@@ -19,7 +21,9 @@ import java.util.List;
 
 import cn.bmob.newim.BmobIM;
 import magic.cn.health.bean.User;
+import magic.cn.health.event.LocationEvent;
 import magic.cn.health.service.BmobMessageHandler;
+import magic.cn.health.service.MyLocationListener;
 import magic.cn.health.utils.MyLog;
 import magic.cn.health.utils.SharePreferenceUtil;
 
@@ -38,6 +42,13 @@ public class App extends Application {
 
     private List<User> listFriends;
 
+    public LocationClient mLocationClient = null;
+
+    private MyLocationListener myListener = new MyLocationListener();
+
+    private LocationEvent locationEvent = null;
+
+
     @Override
     public void onCreate() {
         super.onCreate();
@@ -50,6 +61,26 @@ public class App extends Application {
         initImageLoader();
 
         listFriends = new ArrayList<>();
+
+        //百度地图
+        mLocationClient = new LocationClient(instance);
+        //声明LocationClient类
+        mLocationClient.registerLocationListener(myListener);
+        //注册监听函数
+
+        LocationClientOption option = new LocationClientOption();
+
+        option.setIsNeedLocationDescribe(true);
+
+        option.setIsNeedAddress(true);//可选，设置是否需要地址信息，默认不需要
+
+        option.setIsNeedLocationPoiList(true);
+        //可选，是否需要位置描述信息，默认为不需要，即参数为false
+        //如果开发者需要获得当前点的位置信息，此处必须为true
+
+        mLocationClient.setLocOption(option);
+
+        mLocationClient.start();
     }
 
     /**
@@ -123,5 +154,19 @@ public class App extends Application {
     public void setListFriends(List<User> listFriends) {
         if(this.listFriends.size()!=0)this.listFriends.clear();
         this.listFriends = listFriends;
+    }
+
+    @Override
+    public void onTerminate() {
+        super.onTerminate();
+        if(mLocationClient.isStarted())mLocationClient.stop();
+    }
+
+    public LocationEvent getLocationEvent() {
+        return locationEvent;
+    }
+
+    public void setLocationEvent(LocationEvent locationEvent) {
+        this.locationEvent = locationEvent;
     }
 }

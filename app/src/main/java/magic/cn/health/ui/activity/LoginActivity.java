@@ -1,5 +1,6 @@
 package magic.cn.health.ui.activity;
 
+import android.app.Dialog;
 import android.databinding.DataBindingUtil;
 import android.text.TextUtils;
 import android.view.View;
@@ -27,6 +28,8 @@ public class LoginActivity extends BaseActivity {
     private User user;
 
     private UserModel model;
+
+    private Dialog dialog;
     @Override
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_login);
@@ -39,6 +42,7 @@ public class LoginActivity extends BaseActivity {
 
         binding.setUser(user);
 
+        dialog = showDialog("正在登陆");
     }
 
     @Override
@@ -62,13 +66,15 @@ public class LoginActivity extends BaseActivity {
                     showToast("请填写密码");
                     return;
                 }else {
+                    dialog.show();
                     model.login(user, new SaveListener<User>() {
                         @Override
                         public void done(User user, BmobException e) {
+                            dialog.dismiss();
                             if(user!=null){
                                 startActivity(MainActivity.class);
                             }else {
-                                showToast(BmobErrorCode.errorCodeConvertContent(e.getErrorCode()));
+                                showLog(BmobErrorCode.errorCodeConvertContent(e.getErrorCode()));
                             }
                         }
                     });
@@ -79,7 +85,10 @@ public class LoginActivity extends BaseActivity {
 
     @Override
     protected void destoryView() {
-
+        if(dialog.isShowing()){
+            dialog.dismiss();
+            dialog = null;
+        }
     }
 
     @Override

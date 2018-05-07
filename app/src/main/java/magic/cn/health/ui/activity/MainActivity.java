@@ -1,10 +1,12 @@
 package magic.cn.health.ui.activity;
 
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v4.app.Fragment;
 import android.support.v4.view.ViewPager;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
+import android.view.KeyEvent;
 import android.view.View;
 import android.widget.LinearLayout;
 
@@ -32,6 +34,7 @@ import magic.cn.health.ui.fragment.BookFragment;
 import magic.cn.health.ui.fragment.ChatFragment;
 import magic.cn.health.ui.fragment.RunFragment;
 import magic.cn.health.ui.fragment.SetFragment;
+import magic.cn.health.utils.ActivityCollector;
 import magic.cn.health.utils.IMMLeaks;
 
 public class MainActivity extends BaseActivity {
@@ -53,6 +56,10 @@ public class MainActivity extends BaseActivity {
     private ViewPagerAdapter adapter = null;
 
     private Toolbar toolbar;
+
+    //之前按下返回键的时间
+    private long mPressedTime = 0;
+
     @Override
     protected void initBind() {
         binding = DataBindingUtil.setContentView(this, R.layout.activity_main);
@@ -69,6 +76,7 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void initView() {
+
 
         list.add(runFragment);
         list.add(chatFragment);
@@ -190,7 +198,6 @@ public class MainActivity extends BaseActivity {
         //清理导致内存泄露的资源
         BmobIM.getInstance().clear();
         UserModel.getModelInstance().loginOut();
-        EventBus.getDefault().unregister(this);
     }
 
     @Override
@@ -266,4 +273,44 @@ public class MainActivity extends BaseActivity {
 //        bookFragment.setNeedRefresh(true);
     }
 
+
+    /**
+     * 通过该方法可以实现按下返回键跟按下home键效果相同
+     * @param keyCode
+     * @param event
+     * @return
+     */
+    @Override
+    public boolean onKeyDown(int keyCode, KeyEvent event) {
+        if (keyCode == KeyEvent.KEYCODE_BACK) {
+            long mNowTime = System.currentTimeMillis();
+            // 比较两次按键时间差
+            if ((mNowTime - mPressedTime) > 2000) {
+                mPressedTime = mNowTime;
+                showToast("再按一次退出程序");
+                return true;
+            }
+            ActivityCollector.finishAll(); //结束所有activity
+            return true;
+        }
+        return super.onKeyDown(keyCode, event);
+    }
+
+    @Override
+    protected void onNewIntent(Intent intent) {
+        super.onNewIntent(intent);
+        int position = intent.getIntExtra("position", -1); //获取标识
+        switch (position) {
+            case 0:
+                viewPager.setCurrentItem(0);
+                initTitle("约跑");
+                break;
+            case 1:
+                break;
+            case 2:
+                break;
+            case 4:
+                break;
+        }
+    }
 }

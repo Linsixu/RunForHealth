@@ -14,6 +14,8 @@ import magic.cn.health.bean.User;
 import magic.cn.health.databinding.FragmentSetBinding;
 import magic.cn.health.model.UserModel;
 import magic.cn.health.ui.activity.LoginActivity;
+import magic.cn.health.ui.activity.MainActivity;
+import magic.cn.health.ui.activity.SelfMsgActivity;
 import magic.cn.health.utils.ActivityCollector;
 
 
@@ -42,6 +44,24 @@ public class SetFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
+
+        binding.layoutSetHistory.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), SelfMsgActivity.class);
+                startActivity(intent);
+            }
+        });
+
+        binding.layoutSetRun.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), MainActivity.class);
+                intent.putExtra("position",0);
+                startActivity(intent);
+            }
+        });
 
     }
 

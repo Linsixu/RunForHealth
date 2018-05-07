@@ -21,6 +21,12 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+
+    sourceSets {
+        main {
+            jniLibs.srcDirs = ['libs',"src/main/jniLibs"]
+        }
+    }
 }
 
 dependencies {
@@ -46,6 +52,9 @@ dependencies {
 
     compile 'org.greenrobot:eventbus:3.0.0'
 
+    //noinspection GradleCompatible
+    compile 'com.android.support:design:23.0.1'
 
+    compile files('libs/BaiduLBS_Android.jar')
 
 }

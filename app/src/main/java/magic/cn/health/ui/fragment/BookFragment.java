@@ -24,6 +24,7 @@ import magic.cn.health.R;
 import magic.cn.health.adapter.UserFriendAdapter;
 import magic.cn.health.app.App;
 import magic.cn.health.bean.User;
+import magic.cn.health.config.Appconfig;
 import magic.cn.health.databinding.FragmentBookBinding;
 import magic.cn.health.db.NewFriendManager;
 import magic.cn.health.event.NewFriendsEvent;
@@ -67,6 +68,7 @@ public class BookFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
         adapter = new UserFriendAdapter(getActivity());
 
         binding.recyclerViewBook.setAdapter(adapter);
@@ -94,7 +96,6 @@ public class BookFragment extends BaseFragment {
 
         dialog = showDialog();
         dialog.setCanceledOnTouchOutside(false);
-
         dialog.show();
     }
 
@@ -117,7 +118,7 @@ public class BookFragment extends BaseFragment {
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
-        if(resultCode == 2 && requestCode == REQUEST_NEWFRIEND_CODE){
+        if(resultCode == Appconfig.SUCCEE_BACK && requestCode == REQUEST_NEWFRIEND_CODE){
             isRefresh = true;
             showLog("onResult");
         }

@@ -44,7 +44,7 @@ public class Appconfig {
 	public static final int LAYOUT_TV_SWITCH = 1;
 	public static final int LAYOUT_TWO_TV  = 1;
 	public static final int LAYOUT_IV_TV  = 1;
-	public static final int LAYOUT_TV_IV  = 2;
+	public static final int SUCCEE_BACK  = 2;
 	public static final int LAYOUT_TWOTV_IV  = 2;
 	public static final int LAYOUT_ONE_BTN = 3;
 

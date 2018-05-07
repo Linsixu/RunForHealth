@@ -8,6 +8,7 @@ import android.widget.TextView;
 import com.nostra13.universalimageloader.core.ImageLoader;
 
 import cn.bmob.newim.bean.BmobIMAudioMessage;
+import cn.bmob.newim.bean.BmobIMLocationMessage;
 import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMUserInfo;
 import magic.cn.health.R;
@@ -68,5 +69,11 @@ public class ImageArrAdapter {
         }else{
             textView.setVisibility(View.GONE);
         }
+    }
+
+    @BindingAdapter("app:setLocation")
+    public static void setLocationMsg(TextView textView,BmobIMMessage message){
+        BmobIMLocationMessage locationMessage = BmobIMLocationMessage.buildFromDB(message);
+        textView.setText(locationMessage.getAddress());
     }
 }

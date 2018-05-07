@@ -9,6 +9,7 @@ import android.view.View;
 import cn.bmob.v3.exception.BmobException;
 import magic.cn.health.R;
 import magic.cn.health.adapter.NewFriendAdapter;
+import magic.cn.health.config.Appconfig;
 import magic.cn.health.databinding.ActivityNewFriendsBinding;
 import magic.cn.health.db.NewFriendManager;
 
@@ -65,7 +66,7 @@ public class NewFriendsActivity extends BaseActivity {
 
     @Override
     protected void toolBarBackListener(View view) {
-        setResult(2);
+        setResult(Appconfig.SUCCEE_BACK);
         finish();
     }
     private void initTitle(String title){

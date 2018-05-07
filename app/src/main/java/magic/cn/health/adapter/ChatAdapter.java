@@ -17,6 +17,7 @@ import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMMessageType;
 import cn.bmob.newim.bean.BmobIMSendStatus;
 import cn.bmob.v3.BmobUser;
+import magic.cn.health.BR;
 import magic.cn.health.R;
 import magic.cn.health.databinding.ItemChatSentMessageBinding;
 import magic.cn.health.inteface.OnRecyclerViewListener;
@@ -95,22 +96,23 @@ public class ChatAdapter extends RecyclerView.Adapter<BindingViewHolder>{
         }else if(viewType == TYPE_SEND_IMAGE){
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_send_image,
                     parent,false);
-            bindingViewHolder = new BindingViewHolder(binding);
+            bindingViewHolder = new SendImageHolder(binding,c,onRecyclerViewListener);
             bindingViewHolder.setLayoutId(R.layout.item_chat_send_image);
         }else if(viewType == TYPE_RECEIVER_IMAGE){
+            MyLog.i(TAG,"TYPE_RECEIVER_IMAGE");
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_receive_image,
                     parent,false);
-            bindingViewHolder = new BindingViewHolder(binding);
+            bindingViewHolder = new ReceiveImageHolder(binding,onRecyclerViewListener);
             bindingViewHolder.setLayoutId(R.layout.item_chat_receive_image);
         }else if(viewType == TYPE_SEND_LOCATION){
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_send_location,
                     parent,false);
-            bindingViewHolder = new BindingViewHolder(binding);
+            bindingViewHolder = new SendLocationHolder(binding,onRecyclerViewListener,c);
             bindingViewHolder.setLayoutId(R.layout.item_chat_send_location);
         }else if(viewType == TYPE_RECEIVER_LOCATION){
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_receive_location,
                     parent,false);
-            bindingViewHolder = new BindingViewHolder(binding);
+            bindingViewHolder = new ReceiveLocationHolder(binding,onRecyclerViewListener);
             bindingViewHolder.setLayoutId(R.layout.item_chat_receive_location);
         }else if(viewType == TYPE_SEND_VOICE){
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_sent_voice,
@@ -173,7 +175,26 @@ public class ChatAdapter extends RecyclerView.Adapter<BindingViewHolder>{
                 holder.getBinding().setVariable(magic.cn.health.BR.isShowTime,shouldShowTime(position));
                 ((ReceiveVoiceHolder)holder).initData(msg);
                 break;
-
+            case R.layout.item_chat_send_image:
+                holder.getBinding().setVariable(BR.msg,msg);
+                holder.getBinding().setVariable(magic.cn.health.BR.isShowTime,shouldShowTime(position));
+                ((SendImageHolder)holder).initData(msg);
+                break;
+            case R.layout.item_chat_receive_image:
+                holder.getBinding().setVariable(BR.msg,msg);
+                holder.getBinding().setVariable(BR.isShowTime,shouldShowTime(position));
+                ((ReceiveImageHolder)holder).initData(msg);
+                break;
+            case R.layout.item_chat_send_location:
+                holder.getBinding().setVariable(BR.msg,msg);
+                holder.getBinding().setVariable(BR.isShowTime,shouldShowTime(position));
+                ((SendLocationHolder)holder).initData(msg);
+                break;
+            case R.layout.item_chat_receive_location:
+                holder.getBinding().setVariable(BR.msg,msg);
+                holder.getBinding().setVariable(BR.isShowTime,shouldShowTime(position));
+                ((ReceiveLocationHolder)holder).initData(msg);
+                break;
         }
     }
     @Override

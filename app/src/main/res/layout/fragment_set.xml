@@ -75,6 +75,7 @@
             android:background="@color/paddingColor"/>
 
         <LinearLayout
+            android:id="@+id/layout_set_run"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/border_padding">
@@ -88,6 +89,7 @@
             style="@style/PaddingView"
             android:layout_marginLeft="@dimen/border_padding"/>
         <LinearLayout
+            android:id="@+id/layout_set_history"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/border_padding">

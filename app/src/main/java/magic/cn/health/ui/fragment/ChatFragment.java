@@ -46,6 +46,7 @@ public class ChatFragment extends BaseFragment {
 
     @Override
     protected void initView() {
+
         adapter = new ConversationAdapter(getActivity());
 
         binding.swRefresh.setColorSchemeResources(R.color.colorPrimary, R.color.primaryColor);

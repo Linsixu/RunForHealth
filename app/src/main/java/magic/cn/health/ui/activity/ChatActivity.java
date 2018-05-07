@@ -1,8 +1,13 @@
 package magic.cn.health.ui.activity;
 
 import android.app.Activity;
+import android.content.Intent;
 import android.databinding.DataBindingUtil;
+import android.graphics.Bitmap;
+import android.net.Uri;
+import android.os.Bundle;
 import android.os.Handler;
+import android.provider.MediaStore;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.text.Editable;
@@ -36,6 +41,8 @@ import java.util.Map;
 import cn.bmob.newim.BmobIM;
 import cn.bmob.newim.bean.BmobIMAudioMessage;
 import cn.bmob.newim.bean.BmobIMConversation;
+import cn.bmob.newim.bean.BmobIMImageMessage;
+import cn.bmob.newim.bean.BmobIMLocationMessage;
 import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMTextMessage;
 import cn.bmob.newim.core.BmobIMClient;
@@ -52,15 +59,18 @@ import magic.cn.health.R;
 import magic.cn.health.adapter.ChatAdapter;
 import magic.cn.health.adapter.GridViewAdapter;
 import magic.cn.health.adapter.SmileAdapter;
+import magic.cn.health.app.App;
 import magic.cn.health.bean.User;
 import magic.cn.health.config.Appconfig;
 import magic.cn.health.databinding.ActivityChatBinding;
 import magic.cn.health.event.KeyboardEvent;
+import magic.cn.health.event.LocationEvent;
 import magic.cn.health.ui.view.VoiceDialog;
 import magic.cn.health.utils.ActivityCollector;
 import magic.cn.health.utils.CommonUtils;
 import magic.cn.health.utils.FaceText;
 import magic.cn.health.utils.FaceTextUtils;
+import magic.cn.health.utils.RealPathFromUriUtils;
 
 /**
  * @author 林思旭
@@ -103,6 +113,8 @@ public class ChatActivity extends BaseActivity implements MessageListHandler {
     private VoiceDialog voiceDialog;
 
     private final String record = "长按 录音";
+
+    private final int CAMERA_STATE = 1;
 
     @Override
     protected void initBind() {
@@ -315,6 +327,36 @@ public class ChatActivity extends BaseActivity implements MessageListHandler {
                         }
                         break;
                 }
+            }
+        });
+
+        binding.includeChatAdd.layoutAddPicture.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (BmobIM.getInstance().getCurrentStatus().getCode() != ConnectionStatus.CONNECTED.getCode()) {
+                    showToast("尚未连接IM服务器");
+                    return;
+                }
+                showLog("点击");
+                Intent intent = new Intent(Intent.ACTION_PICK, null);
+                intent.setDataAndType(
+                        MediaStore.Images.Media.EXTERNAL_CONTENT_URI, "image/*");
+                startActivityForResult(intent, Appconfig.REQUESTCODE_TAKE_LOCAL);//2016.4.8注释掉
+            }
+        });
+
+        binding.includeChatAdd.layoutAddCamera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);// 启动系统相机
+                startActivityForResult(intent, CAMERA_STATE);
+            }
+        });
+
+        binding.includeChatAdd.layoutAddLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                sendLocationMessage();
             }
         });
     }
@@ -764,5 +806,58 @@ public class ChatActivity extends BaseActivity implements MessageListHandler {
         //设置语音文件时长：可选
 //        audio.setDuration(length);
         mConversationManager.sendMessage(audio, listener);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        Uri uri = null;
+        if(data != null){
+            uri = data.getData();
+        }
+        if(requestCode == Appconfig.REQUESTCODE_TAKE_LOCAL && uri != null){
+//            showLog("path="+uri.getPath());
+            String realPathFromUri = RealPathFromUriUtils.getRealPathFromUri(this, data.getData());
+            showLog("realPathFromUri="+realPathFromUri);
+            if(!TextUtils.isEmpty(uri.getPath()))sendLocalImageMessage(realPathFromUri);
+        }else if(resultCode == RESULT_OK && requestCode == CAMERA_STATE){
+            Bundle bundle = data.getExtras(); // 从data中取出传递回来缩略图的信息，图片质量差，适合传递小图片
+            Bitmap bitmap = (Bitmap) bundle.get("data"); // 将data中的信息流解析为Bitmap类
+            Uri uriCamera = Uri.parse(MediaStore.Images.Media.insertImage(getContentResolver(),
+                    bitmap, null,null));
+            String realPathFromUri = RealPathFromUriUtils.getRealPathFromUri(this, uriCamera);
+            showLog("realPathFromUri="+realPathFromUri);
+            if(!TextUtils.isEmpty(uriCamera.getPath())){
+                sendLocalImageMessage(realPathFromUri);
+            }
+        }
+    }
+
+    /**
+     * 发送本地图片文件
+     */
+    public void sendLocalImageMessage(String url) {
+        //TODO 发送消息：6.2、发送本地图片消息
+        //正常情况下，需要调用系统的图库或拍照功能获取到图片的本地地址，开发者只需要将本地的文件地址传过去就可以发送文件类型的消息
+        BmobIMImageMessage image = new BmobIMImageMessage(url);
+        showLog("image="+image);
+        mConversationManager.sendMessage(image, listener);
+    }
+    /**
+     * 发送地理位置消息
+     */
+    public void sendLocationMessage() {
+        //TODO 发送消息：6.10、发送位置消息
+        //测试数据，真实数据需要从地图SDK中获取
+        LocationEvent locationEvent = App.getInstance().getLocationEvent();
+        if(locationEvent != null){
+            String provinceCity = locationEvent.getCity()+locationEvent.getDistrict()+locationEvent.getStreet();
+            double latitude = locationEvent.getLatitude();
+            double altitude = locationEvent.getAltitude();
+            BmobIMLocationMessage location = new BmobIMLocationMessage(provinceCity, latitude, altitude);
+            Map<String, Object> map = new HashMap<>();
+            map.put("from", "百度地图");
+            location.setExtraMap(map);
+            mConversationManager.sendMessage(location, listener);
+        }
     }
 }

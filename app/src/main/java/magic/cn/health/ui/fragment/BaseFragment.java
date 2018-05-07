@@ -1,6 +1,8 @@
 package magic.cn.health.ui.fragment;
 
 import android.app.Activity;
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -21,6 +23,9 @@ public abstract class BaseFragment extends Fragment {
 
     private ViewGroup rootView = null;
 
+//    protected boolean isVisible;
+//
+//    protected boolean isPrepared = false;
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -36,6 +41,7 @@ public abstract class BaseFragment extends Fragment {
 
             initView();
         }
+
         return rootView;
     }
 
@@ -80,5 +86,12 @@ public abstract class BaseFragment extends Fragment {
         if (bundle != null)
             intent.putExtra(getActivity().getPackageName(), bundle);
         getActivity().startActivity(intent);
+    }
+
+
+    public Dialog showDialog(String remind){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("提示").setMessage(remind);
+        return builder.create();
     }
 }

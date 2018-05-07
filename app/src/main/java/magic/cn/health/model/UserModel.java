@@ -97,7 +97,9 @@ public class UserModel extends BaseModel {
                     //重新与Bmob服务器建立IM链接
                     buildconnectFromBmob();
                 }
-                MyLog.i(TAG,"e="+e);
+                if(e.getErrorCode() == 9015){
+                    buildconnectFromBmob();
+                }
             }
         });
     }
@@ -444,10 +446,5 @@ public class UserModel extends BaseModel {
                 }
             }
         });
-    }
-
-
-    private void sortListUser(List<Friend> list){
-
     }
 }

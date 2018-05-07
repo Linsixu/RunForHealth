@@ -22,6 +22,16 @@
     <!--通知震动-->
     <uses-permission android:name="android.permission.VIBRATE" />
 
+    <!-- 这个权限用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION"/>
+    <!-- 这个权限用于访问GPS定位-->
+    <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION"/>
+    <!-- 用于访问wifi网络信息，wifi信息会用于进行网络定位-->
+    <uses-permission android:name="android.permission.ACCESS_WIFI_STATE"/>
+    <!-- 这个权限用于获取wifi的获取权限，wifi信息会用来进行网络定位-->
+    <uses-permission android:name="android.permission.CHANGE_WIFI_STATE"/>
+    <!-- SD卡读取权限，用户写入离线定位数据-->
+    <uses-permission android:name="android.permission.MOUNT_UNMOUNT_FILESYSTEMS"/>
 
     <application
         android:name=".app.App"
@@ -42,16 +52,25 @@
         <activity android:name=".ui.activity.RegisterActivity"/>
         <activity android:name=".ui.activity.SetInfoActivity"/>
         <activity android:name=".ui.activity.ChoosePhotoActivity"/>
-        <activity android:name=".ui.activity.MainActivity"/>
+        <activity android:name=".ui.activity.MainActivity" android:launchMode="singleTask"/>
         <activity android:name=".ui.activity.SearchUserActivity"/>
         <activity android:name=".ui.activity.NewFriendsActivity"/>
         <activity android:name=".ui.activity.ChatActivity"
             android:windowSoftInputMode="adjustResize|stateHidden"/>
+        <activity android:name=".ui.activity.CommitRunActivity"/>
+        <activity android:name=".ui.activity.SelfMsgActivity"/>
 
         <meta-data
             android:name="Bmob_APP_KEY"
             android:value="8d42da3e9bc460049b3c9ccc24a8cb5e" />
 
+
+        <!-- 百度定位相关代码定义-->
+        <meta-data
+            android:name="com.baidu.lbsapi.API_KEY"
+            android:value="gZaT89BgWgYrdlMDvRp8FIFHROohuiu1" >
+        </meta-data>
+        <service android:name="com.baidu.location.f" android:enabled="true" android:process=":remote"> </service>
 
         <receiver android:name="cn.bmob.newim.core.ConnectChangeReceiver" >
             <intent-filter>

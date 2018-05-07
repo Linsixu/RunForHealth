@@ -1,5 +1,7 @@
 package magic.cn.health.ui.activity;
 
+import android.app.AlertDialog;
+import android.app.Dialog;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -123,5 +125,11 @@ public abstract class BaseActivity extends AppCompatActivity {
             return getIntent().getBundleExtra(getPackageName());
         else
             return null;
+    }
+
+    public Dialog showDialog(String content){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        builder.setTitle("提示").setMessage(content);
+        return builder.create();
     }
 }
