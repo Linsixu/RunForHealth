@@ -9,6 +9,7 @@ import android.view.View;
 import magic.cn.health.R;
 import magic.cn.health.bean.User;
 import magic.cn.health.databinding.ActivityRegisterBinding;
+import magic.cn.health.utils.PhoneFormatCheckUtils;
 
 /**
  * @author 林思旭
@@ -37,6 +38,11 @@ public class RegisterActivity extends BaseActivity {
                 if(TextUtils.isEmpty(user.getUsername())){
                     showToast("请填写用户名");
                     return;
+                }else{
+                    if(!PhoneFormatCheckUtils.isChinaPhoneLegal(user.getUsername())){
+                        showToast("请输入合法手机号码");
+                        return;
+                    }
                 }
                 if(TextUtils.isEmpty(user.getPwd())){
                     showToast("请填写密码");

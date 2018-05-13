@@ -2,6 +2,7 @@ package magic.cn.health.adapter;
 
 import android.content.Context;
 import android.graphics.drawable.Drawable;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -63,7 +64,7 @@ public class GridViewAdapter extends BaseAdapter {
 		Drawable drawable = context.getResources().getDrawable(
 				context.getResources().getIdentifier(key,"drawable", 
 						context.getPackageName()));
-//		Log.i(TAG, "drawable"+drawable);
+		Log.i(TAG, "drawable"+drawable);
 		holder.image.setImageDrawable(drawable);
 		return convertView;
 	}

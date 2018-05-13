@@ -40,8 +40,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginLeft="@dimen/margin_chat_top"
                 android:background="@drawable/icon_head_boy"
-                android:scaleType="fitXY"
-                app:loadIcon="@{msg}"/>
+                android:scaleType="fitXY"/>
 
             <ImageView
                 android:id="@+id/iv_picture"

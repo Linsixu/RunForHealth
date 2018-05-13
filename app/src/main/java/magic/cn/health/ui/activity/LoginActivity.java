@@ -9,6 +9,7 @@ import android.widget.TextView;
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.SaveListener;
 import magic.cn.health.R;
+import magic.cn.health.app.App;
 import magic.cn.health.bean.User;
 import magic.cn.health.databinding.ActivityLoginBinding;
 import magic.cn.health.model.UserModel;
@@ -73,8 +74,12 @@ public class LoginActivity extends BaseActivity {
                             dialog.dismiss();
                             if(user!=null){
                                 startActivity(MainActivity.class);
+                                if(user.getAvatar()!=null){
+                                    App.getInstance().getSharedPreferencesUtil().setAvatarUrl(user.getAvatar());
+                                }
+                                finish();
                             }else {
-                                showLog(BmobErrorCode.errorCodeConvertContent(e.getErrorCode()));
+                                showToast(BmobErrorCode.errorCodeConvertContent(e.getErrorCode()));
                             }
                         }
                     });

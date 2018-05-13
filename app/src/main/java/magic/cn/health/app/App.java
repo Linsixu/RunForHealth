@@ -156,6 +156,10 @@ public class App extends Application {
         this.listFriends = listFriends;
     }
 
+    public void clearFriends(){
+        this.listFriends.clear();
+    }
+
     @Override
     public void onTerminate() {
         super.onTerminate();

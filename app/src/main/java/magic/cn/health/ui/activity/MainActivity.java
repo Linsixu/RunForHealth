@@ -309,7 +309,7 @@ public class MainActivity extends BaseActivity {
                 break;
             case 2:
                 break;
-            case 4:
+            case 3:
                 break;
         }
     }

@@ -86,4 +86,12 @@ public class Appconfig {
 
 	public static int TYPE_OPEN_SMILE_AND_CLOSE_FUNCTION = 20;
 	public static int TYPE_OPEN_FUNCTION_AND_CLOSE_SMILE = 21;
+
+
+	//修改个人信息的标签
+	public final static int INFO_CHAGE_PHOTO = 22;
+	public final static int INFO_CHAGE_NICK = 23;
+	public final static int INFO_CHAGE_SIGNATURE = 24;
+	public final static int INFO_CHAGE_HEIGHT = 25;
+	public final static int INFO_CHAGE_WEIGHT = 26;
 }

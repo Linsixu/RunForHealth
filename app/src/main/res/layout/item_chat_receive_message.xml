@@ -48,8 +48,7 @@
                 android:layout_alignParentTop="true"
                 android:contentDescription="头像"
                 android:layout_marginLeft="@dimen/margin_chat_top"
-                android:scaleType="fitXY"
-                app:loadIcon="@{msg}"/>
+                android:scaleType="fitXY"/>
             <magic.cn.health.ui.view.BmobTextView
                 android:id="@+id/tv_message"
                 android:layout_width="wrap_content"

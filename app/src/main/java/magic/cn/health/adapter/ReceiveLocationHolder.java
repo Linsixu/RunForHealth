@@ -1,13 +1,19 @@
 package magic.cn.health.adapter;
 
 import android.databinding.ViewDataBinding;
+import android.text.TextUtils;
 import android.view.View;
 
+import com.nostra13.universalimageloader.core.ImageLoader;
+
+import cn.bmob.newim.bean.BmobIMConversation;
 import cn.bmob.newim.bean.BmobIMLocationMessage;
 import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMReceiveStatus;
+import magic.cn.health.R;
 import magic.cn.health.databinding.ItemChatReceiveLocationBinding;
 import magic.cn.health.inteface.OnRecyclerViewListener;
+import magic.cn.health.utils.ImageLoaderOptions;
 import magic.cn.health.utils.MyLog;
 
 /**
@@ -23,10 +29,13 @@ public class ReceiveLocationHolder extends BaseViewHolder {
 
     private OnRecyclerViewListener onRecyclerViewListener;
 
-    public ReceiveLocationHolder(ViewDataBinding binding, OnRecyclerViewListener listener) {
+    private BmobIMConversation c;
+
+    public ReceiveLocationHolder(ViewDataBinding binding, OnRecyclerViewListener listener,BmobIMConversation c) {
         super(binding);
         this.binding = (ItemChatReceiveLocationBinding)binding;
         onRecyclerViewListener = listener;
+        this.c = c;
     }
 
     @Override
@@ -35,7 +44,12 @@ public class ReceiveLocationHolder extends BaseViewHolder {
 
 //        //用户信息的获取必须在buildFromDB之前，否则会报错'Entity is detached from DAO context'
 //        final BmobIMUserInfo info = msg.getBmobIMUserInfo();
-
+        //显示用户头像
+        if(TextUtils.isEmpty(c.getConversationIcon())){
+            binding.ivAvatar.setImageResource(R.drawable.icon_head_boy);
+        }else{
+            ImageLoader.getInstance().displayImage(c.getConversationIcon(), binding.ivAvatar, ImageLoaderOptions.getOptions());
+        }
         final BmobIMLocationMessage message = BmobIMLocationMessage.buildFromDB(msg);
         int statue = message.getReceiveStatus();
 

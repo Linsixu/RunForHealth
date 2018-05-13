@@ -19,6 +19,7 @@
             android:layout_height="@dimen/border_padding"
             android:background="@color/paddingColor"/>
         <RelativeLayout
+            android:id="@+id/layout_chage_info"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:paddingTop="@dimen/border_padding"
@@ -116,6 +117,7 @@
             style="@style/PaddingView"
             android:layout_marginLeft="@dimen/border_padding"/>
         <LinearLayout
+            android:id="@+id/layout_about_us"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginLeft="@dimen/border_padding">

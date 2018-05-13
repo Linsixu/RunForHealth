@@ -132,6 +132,7 @@ public class ChatActivity extends BaseActivity implements MessageListHandler {
 
 //        targetUser = (User) getIntent().getSerializableExtra("user");
         BmobIMConversation conversationEntrance = (BmobIMConversation) getIntent().getSerializableExtra("c");
+
         //TODO 消息：5.1、根据会话入口获取消息管理，聊天页面
         mConversationManager = BmobIMConversation.obtain(BmobIMClient.getInstance(), conversationEntrance);
 

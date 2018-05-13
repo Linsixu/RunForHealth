@@ -4,9 +4,13 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.support.v7.widget.RecyclerView;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
+
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -21,6 +25,7 @@ import magic.cn.health.BR;
 import magic.cn.health.R;
 import magic.cn.health.databinding.ItemChatSentMessageBinding;
 import magic.cn.health.inteface.OnRecyclerViewListener;
+import magic.cn.health.utils.ImageLoaderOptions;
 import magic.cn.health.utils.MyLog;
 
 /**
@@ -102,7 +107,7 @@ public class ChatAdapter extends RecyclerView.Adapter<BindingViewHolder>{
             MyLog.i(TAG,"TYPE_RECEIVER_IMAGE");
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_receive_image,
                     parent,false);
-            bindingViewHolder = new ReceiveImageHolder(binding,onRecyclerViewListener);
+            bindingViewHolder = new ReceiveImageHolder(binding,onRecyclerViewListener,c);
             bindingViewHolder.setLayoutId(R.layout.item_chat_receive_image);
         }else if(viewType == TYPE_SEND_LOCATION){
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_send_location,
@@ -112,7 +117,7 @@ public class ChatAdapter extends RecyclerView.Adapter<BindingViewHolder>{
         }else if(viewType == TYPE_RECEIVER_LOCATION){
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_receive_location,
                     parent,false);
-            bindingViewHolder = new ReceiveLocationHolder(binding,onRecyclerViewListener);
+            bindingViewHolder = new ReceiveLocationHolder(binding,onRecyclerViewListener,c);
             bindingViewHolder.setLayoutId(R.layout.item_chat_receive_location);
         }else if(viewType == TYPE_SEND_VOICE){
             binding = DataBindingUtil.inflate(mLayoutInflater,R.layout.item_chat_sent_voice,
@@ -137,6 +142,7 @@ public class ChatAdapter extends RecyclerView.Adapter<BindingViewHolder>{
     @Override
     public void onBindViewHolder(BindingViewHolder holder, final int position) {
         BmobIMMessage msg = msgs.get(position);
+        MyLog.i(TAG,"avatar="+msg.getBmobIMUserInfo());
         switch (holder.getLayoutId()){
             case R.layout.item_chat_agree:
                 holder.getBinding().setVariable(magic.cn.health.BR.msg,msg);
@@ -162,6 +168,12 @@ public class ChatAdapter extends RecyclerView.Adapter<BindingViewHolder>{
             case R.layout.item_chat_receive_message:
                 holder.getBinding().setVariable(magic.cn.health.BR.msg, msg);
                 holder.getBinding().setVariable(magic.cn.health.BR.isShowTime,shouldShowTime(position));
+                ImageView avatar_msg = holder.itemView.findViewById(R.id.iv_avatar);
+                if(TextUtils.isEmpty(c.getConversationIcon())){
+                    avatar_msg.setImageResource(R.drawable.icon_head_boy);
+                }else{
+                    ImageLoader.getInstance().displayImage(c.getConversationIcon(),avatar_msg, ImageLoaderOptions.getOptions());
+                }
                 holder.getBinding().executePendingBindings();
                 break;
             case R.layout.item_chat_sent_voice:
@@ -174,6 +186,12 @@ public class ChatAdapter extends RecyclerView.Adapter<BindingViewHolder>{
                 holder.getBinding().setVariable(magic.cn.health.BR.msg, msg);
                 holder.getBinding().setVariable(magic.cn.health.BR.isShowTime,shouldShowTime(position));
                 ((ReceiveVoiceHolder)holder).initData(msg);
+                ImageView avatar_voice = holder.itemView.findViewById(R.id.iv_avatar);
+                if(TextUtils.isEmpty(c.getConversationIcon())){
+                    avatar_voice.setImageResource(R.drawable.icon_head_boy);
+                }else{
+                    ImageLoader.getInstance().displayImage(c.getConversationIcon(),avatar_voice, ImageLoaderOptions.getOptions());
+                }
                 break;
             case R.layout.item_chat_send_image:
                 holder.getBinding().setVariable(BR.msg,msg);

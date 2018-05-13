@@ -14,19 +14,70 @@ android {
         versionCode 1
         versionName "1.0"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
-    }
-    buildTypes {
-        release {
-            minifyEnabled false
-            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+        ndk {
+            //根据需要 自行选择添加的对应cpu类型的.so库。
+            abiFilters 'armeabi', 'armeabi-v7a', 'arm64-v8a','x86','arm64-v8a','x86_64','x86','mips','mips64'
+            // 还可以添加 , 'x86_64', 'mips', 'mips64','x86'
         }
     }
+//    buildTypes {
+//        release {
+//            minifyEnabled false
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//        }
+//    }
+    signingConfigs {
+        release {
+            storeFile file('../keystore/runforhealth.keystore')
+            storePassword 'linsixu'
+            keyAlias 'runforhealth.keystore'
+            keyPassword 'linsixu'
+        }
+    }
+
+    buildTypes {
+        debug {
+            minifyEnabled false
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+
+//            //启用代码混淆
+//            minifyEnabled true
+//            //混淆规则配置文件
+//            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+//            //
+//            signingConfig signingConfigs.debug
+        }
+        release {
+            minifyEnabled true//是否混淆
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
+            // 不显示Log
+            buildConfigField "boolean", "LOG_DEBUG", "false"
+//            //Zipalign优化
+            zipAlignEnabled true
+            // 移除无用的resource文件)(这个会将表情图片删除，因为代码中没有直接引用，所以会以为是没用的图片)
+//            shrinkResources true
+            //  签名
+            signingConfig signingConfigs.release
+        }
+    }
+
 
     sourceSets {
         main {
             jniLibs.srcDirs = ['libs',"src/main/jniLibs"]
         }
     }
+
+    packagingOptions {
+        exclude 'META-INF/DEPENDENCIES'
+        exclude 'META-INF/NOTICE'
+        exclude 'META-INF/LICENSE'
+        exclude 'META-INF/LICENSE.txt'
+        exclude 'META-INF/NOTICE.txt'
+        exclude 'META-INF/ASL2.0'
+        exclude 'META-INF/notice.txt'
+    }
+
 }
 
 dependencies {

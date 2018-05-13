@@ -39,7 +39,7 @@
                 android:layout_alignParentTop="true"
                 android:layout_marginRight="@dimen/margin_chat_top"
                 android:scaleType="fitXY"
-                app:loadIcon="@{msg}"/>
+                app:loadUserImage="@{msg}"/>
 
             <LinearLayout
                 android:id="@+id/layout_location"

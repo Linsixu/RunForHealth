@@ -29,6 +29,8 @@ public class ChoosePhotoActivity extends BaseActivity {
 
 
     CompositeSubscription subscription = new CompositeSubscription();
+
+    private boolean isChageInfo = false;
     @Override
     protected void initBind() {
 
@@ -88,7 +90,7 @@ public class ChoosePhotoActivity extends BaseActivity {
         subscription.add(onSave.subscribe(new Action1<Void>() {
             @Override
             public void call(Void aVoid) {
-                Intent intent = getIntent();
+                final Intent intent = getIntent();
                 intent.setData(Uri.fromFile(croppedFile));
                 showLog("uri="+Uri.fromFile(croppedFile));
                 ChoosePhotoActivity.this.setResult(Appconfig.REQUESTCODE_CHOOSE_PHOTO,intent);
@@ -97,4 +99,29 @@ public class ChoosePhotoActivity extends BaseActivity {
         }));
     }
 
+
+//    @Override
+//    protected void onNewIntent(Intent intent) {
+//        super.onNewIntent(intent);
+//        int source = intent.getIntExtra("source",-1);
+//        if(source == 1){
+//            isChageInfo = true;
+//        }else{
+//            isChageInfo = false;
+//        }
+//    }
+//
+//    private void updateUserInfo(User user,final Intent intent){
+//        user.update(user.getObjectId(), new UpdateListener() {
+//            @Override
+//            public void done(BmobException e) {
+//                if(e == null){
+//                    ChoosePhotoActivity.this.setResult(Appconfig.REQUESTCODE_CHOOSE_PHOTO,intent);
+//                    finish();
+//                }else{
+//                    showToast("修改头像失败");
+//                }
+//            }
+//        });
+//    }
 }

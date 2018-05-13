@@ -10,9 +10,12 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import magic.cn.health.R;
+import magic.cn.health.app.App;
 import magic.cn.health.bean.User;
 import magic.cn.health.databinding.FragmentSetBinding;
 import magic.cn.health.model.UserModel;
+import magic.cn.health.ui.activity.AboutUsActivity;
+import magic.cn.health.ui.activity.ChageInfoActivity;
 import magic.cn.health.ui.activity.LoginActivity;
 import magic.cn.health.ui.activity.MainActivity;
 import magic.cn.health.ui.activity.SelfMsgActivity;
@@ -33,18 +36,33 @@ public class SetFragment extends BaseFragment {
     protected View initBinding(LayoutInflater inflater, ViewGroup container) {
         binding = DataBindingUtil.inflate(inflater, R.layout.fragment_set,container,false);
 
-        user = UserModel.getModelInstance().getCurrentUser();
+//        user = UserModel.getModelInstance().getCurrentUser();
 
         binding.setPresenter(this);
 
-        binding.setUser(user);
+//        binding.setUser(user);
 
         return binding.getRoot();
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        user = UserModel.getModelInstance().getCurrentUser();
+        binding.setUser(user);
+    }
+
+    @Override
     protected void initView() {
 
+
+        binding.layoutChageInfo.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), ChageInfoActivity.class);
+                startActivity(intent);
+            }
+        });
 
         binding.layoutSetHistory.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -59,6 +77,14 @@ public class SetFragment extends BaseFragment {
             public void onClick(View view) {
                 Intent intent = new Intent(getActivity(), MainActivity.class);
                 intent.putExtra("position",0);
+                startActivity(intent);
+            }
+        });
+
+        binding.layoutAboutUs.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(getActivity(), AboutUsActivity.class);
                 startActivity(intent);
             }
         });
@@ -89,6 +115,7 @@ public class SetFragment extends BaseFragment {
                 ActivityCollector.finishAll();
                 Intent intent = new Intent(getActivity(), LoginActivity.class);
                 startActivity(intent);
+                App.getInstance().clearFriends();
                 UserModel.getModelInstance().loginOut();
             }
         });

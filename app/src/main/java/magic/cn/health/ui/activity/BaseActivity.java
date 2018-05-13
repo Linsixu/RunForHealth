@@ -130,6 +130,8 @@ public abstract class BaseActivity extends AppCompatActivity {
     public Dialog showDialog(String content){
         final AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("提示").setMessage(content);
-        return builder.create();
+        Dialog dialog = builder.create();
+        dialog.setCanceledOnTouchOutside(false);
+        return dialog;
     }
 }

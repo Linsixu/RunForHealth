@@ -1,6 +1,7 @@
 package magic.cn.health.adapter;
 
 import android.databinding.BindingAdapter;
+import android.text.TextUtils;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -12,8 +13,10 @@ import cn.bmob.newim.bean.BmobIMLocationMessage;
 import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMUserInfo;
 import magic.cn.health.R;
+import magic.cn.health.app.App;
 import magic.cn.health.bean.Conversation;
 import magic.cn.health.utils.ImageLoaderOptions;
+import magic.cn.health.utils.SharePreferenceUtil;
 import magic.cn.health.utils.TimeUtil;
 
 /**
@@ -44,6 +47,22 @@ public class ImageArrAdapter {
         }
     }
 
+    @BindingAdapter("app:loadUserImage")
+    public static void loadUserSelfIcon(ImageView imageView,BmobIMMessage message){
+        if(message != null) {
+            BmobIMUserInfo info = message.getBmobIMUserInfo();
+            if(info != null && !TextUtils.isEmpty(info.getAvatar())){
+                ImageLoader.getInstance().displayImage(info.getAvatar(),imageView,ImageLoaderOptions.getOptions());
+            }else {
+                SharePreferenceUtil sharePreferenceUtil = App.getInstance().getSharedPreferencesUtil();
+                if(sharePreferenceUtil!=null && sharePreferenceUtil.getAvatarUrl()!=null){
+                    ImageLoader.getInstance().displayImage(sharePreferenceUtil.getAvatarUrl(),imageView,ImageLoaderOptions.getOptions());
+                }else{
+                    imageView.setImageResource(R.drawable.icon_head_boy);
+                }
+            }
+        }
+    }
     @BindingAdapter("app:data")
     public static void bindFormat(TextView textView,Long date){
         if (date == 0) {

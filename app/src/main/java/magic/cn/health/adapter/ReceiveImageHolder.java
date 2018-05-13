@@ -2,15 +2,18 @@ package magic.cn.health.adapter;
 
 import android.databinding.ViewDataBinding;
 import android.graphics.Bitmap;
+import android.text.TextUtils;
 import android.view.View;
 
 import com.nostra13.universalimageloader.core.ImageLoader;
 import com.nostra13.universalimageloader.core.assist.FailReason;
 import com.nostra13.universalimageloader.core.listener.ImageLoadingListener;
 
+import cn.bmob.newim.bean.BmobIMConversation;
 import cn.bmob.newim.bean.BmobIMImageMessage;
 import cn.bmob.newim.bean.BmobIMMessage;
 import cn.bmob.newim.bean.BmobIMUserInfo;
+import magic.cn.health.R;
 import magic.cn.health.databinding.ItemChatReceiveImageBinding;
 import magic.cn.health.inteface.OnRecyclerViewListener;
 import magic.cn.health.utils.ImageLoaderOptions;
@@ -28,20 +31,31 @@ public class ReceiveImageHolder extends BaseViewHolder {
 
     private OnRecyclerViewListener onRecyclerViewListener;
 
-    public ReceiveImageHolder(ViewDataBinding binding, OnRecyclerViewListener listener) {
+    private BmobIMConversation c;
+
+    public ReceiveImageHolder(ViewDataBinding binding, OnRecyclerViewListener listener,BmobIMConversation c) {
         super(binding);
         this.binding = (ItemChatReceiveImageBinding)binding;
         onRecyclerViewListener = listener;
+        this.c = c;
     }
 
 
     @Override
     public void initData(Object o) {
+
         BmobIMMessage msg = (BmobIMMessage)o;
         //用户信息的获取必须在buildFromDB之前，否则会报错'Entity is detached from DAO context'
         final BmobIMUserInfo info = msg.getBmobIMUserInfo();
         //可使用buildFromDB方法转化为指定类型的消息
         final BmobIMImageMessage message = BmobIMImageMessage.buildFromDB(false,msg);
+
+        //显示用户头像
+        if(TextUtils.isEmpty(c.getConversationIcon())){
+            binding.ivAvatar.setImageResource(R.drawable.icon_head_boy);
+        }else{
+            ImageLoader.getInstance().displayImage(c.getConversationIcon(), binding.ivAvatar, ImageLoaderOptions.getOptions());
+        }
         //显示图片
         ImageLoader.getInstance().loadImage(message.getRemoteUrl(), ImageLoaderOptions.getOptions(), new ImageLoadingListener() {
             @Override
