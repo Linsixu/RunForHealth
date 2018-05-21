@@ -646,11 +646,6 @@ public class ChatActivity extends BaseActivity implements MessageListHandler {
         //TODO 发送消息：6.1、发送文本消息
         BmobIMTextMessage msg = new BmobIMTextMessage();
         msg.setContent(text);
-//        //可随意设置额外信息
-//        Map<String, Object> map = new HashMap<>();
-//        map.put("level", "1");
-//        msg.setExtraMap(map);
-//        msg.setExtra("OK");
         mConversationManager.sendMessage(msg, listener);
     }
 

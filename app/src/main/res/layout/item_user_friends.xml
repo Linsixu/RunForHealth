@@ -10,7 +10,9 @@
             type="magic.cn.health.model.StartModel"/>
     </data>
     <!--林思旭 2016.4.8 -->
-    <RelativeLayout android:layout_width="match_parent"
+    <RelativeLayout
+        android:id="@+id/layout_user_friend"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:onClick="@{()->presenter.jumpToChatActivity(user)}">
         <TextView

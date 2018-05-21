@@ -33,6 +33,8 @@ public class User extends BmobUser{
 
     private String weight;
 
+    private String friendsId;
+
     public User(){}
 
     public User(NewFriend friend){
@@ -115,6 +117,14 @@ public class User extends BmobUser{
 
     public void setWeight(String weight) {
         this.weight = weight;
+    }
+
+    public String getFriendsId() {
+        return friendsId;
+    }
+
+    public void setFriendsId(String friendsId) {
+        this.friendsId = friendsId;
     }
 
     @Override

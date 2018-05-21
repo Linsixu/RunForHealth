@@ -2,12 +2,14 @@ package magic.cn.health.ui.fragment;
 
 import android.app.AlertDialog;
 import android.app.Dialog;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.databinding.DataBindingUtil;
 import android.support.v7.widget.LinearLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import org.greenrobot.eventbus.EventBus;
 import org.greenrobot.eventbus.Subscribe;
@@ -20,9 +22,11 @@ import java.util.List;
 
 import cn.bmob.v3.exception.BmobException;
 import cn.bmob.v3.listener.FindListener;
+import cn.bmob.v3.listener.UpdateListener;
 import magic.cn.health.R;
 import magic.cn.health.adapter.UserFriendAdapter;
 import magic.cn.health.app.App;
+import magic.cn.health.bean.Friend;
 import magic.cn.health.bean.User;
 import magic.cn.health.config.Appconfig;
 import magic.cn.health.databinding.FragmentBookBinding;
@@ -53,9 +57,13 @@ public class BookFragment extends BaseFragment {
 
     private Dialog dialog;
 
+    private Dialog  deleteDialog;
+
     private boolean isRefresh = true;
 
     private final static int REQUEST_NEWFRIEND_CODE = 1; // 返回的结果码
+
+    private boolean isShow = true;
 
     @Override
     protected View initBinding(LayoutInflater inflater, ViewGroup container) {
@@ -97,10 +105,22 @@ public class BookFragment extends BaseFragment {
         dialog = showDialog();
         dialog.setCanceledOnTouchOutside(false);
         dialog.show();
+
+
+        //删除好友的监听
+        adapter.setDeleteUserListener(new UserFriendAdapter.DeleteUserListener() {
+            @Override
+            public void onClick(View v,int position) {
+                User user = listUser.get(position);
+                deleteDialog = showDeleteDialog(user.getNick(),user);
+                deleteDialog.show();
+            }
+        });
     }
 
     @Override
     protected void destroyView() {
+        if(dialog.isShowing() && dialog!=null)dialog.dismiss();
         EventBus.getDefault().unregister(this);
     }
 
@@ -189,6 +209,44 @@ public class BookFragment extends BaseFragment {
         return builder.create();
     }
 
+    private Dialog showDeleteDialog(String userName,final User friendUser){
+        final AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
+        builder.setTitle("提示").setMessage("是否删除:"+userName).setNegativeButton("取消", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                builder.create().dismiss();
+                return;
+            }
+        }).setPositiveButton("确定", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                deleteUser(friendUser);
+            }
+        });
+        return builder.create();
+    }
 
+    private void deleteUser(final User friendUser){
+        isShow = true;
+        User user = UserModel.getModelInstance().getCurrentUser();
+        Friend friend = new Friend();
+        friend.setUser(user);
+        friend.setFriendUser(friendUser);
+        friend.setObjectId(friendUser.getFriendsId());
+        UserModel.getModelInstance().deleteFriend(friend, new UpdateListener() {
+            @Override
+            public void done(BmobException e) {
+                if (e == null) {
+                    if(isShow){
+                        Toast.makeText(getActivity(),"好友删除成功",Toast.LENGTH_SHORT).show();
+                        adapter.remove(friendUser);
+                        isShow = false;
+                    }
+                } else {
+                    Toast.makeText(getActivity(),"好友删除失败"+e.getMessage(),Toast.LENGTH_SHORT).show();
+                }
+            }
+        });
+    }
 
 }

@@ -69,19 +69,6 @@ public class UserModel extends BaseModel {
      * @param user
      */
     public void login(User user, final SaveListener<User> listener) {
-//        if(TextUtils.isEmpty(user.getUsername())){
-//            listener.internalStart();
-//            listener.done("请填写用户名",new BmobException());
-//            MyLog.i(TAG,"请填写用户名");
-//            return;
-//        }
-//        if(TextUtils.isEmpty(password)){
-//            listener.internalStart();
-//            listener.done("请填写用户名",new BmobException());
-//            MyLog.i(TAG,"请填写密码");
-//            return;
-//        }
-//        final User user =new User();
         user.setPassword(user.getPwd());
         user.login(new SaveListener<User>() {
             @Override
@@ -359,9 +346,23 @@ public class UserModel extends BaseModel {
      * @param listener
      */
     //TODO 好友管理：9.3、删除好友
-    public void deleteFriend(Friend f, UpdateListener listener) {
-        Friend friend = new Friend();
-        friend.delete(f.getObjectId(), listener);
+    public void deleteFriend(Friend f, final UpdateListener listener) {
+        final Friend friend = new Friend();
+        friend.delete(f.getObjectId(),listener);
+        //首先删除好友在自己的列表关系，再删除自己与好友的关系
+        BmobQuery<Friend> query = new BmobQuery<>();
+        query.addWhereEqualTo("user", f.getFriendUser());
+        query.addWhereEqualTo("friendUser",f.getUser());
+        query.include("friendUser");
+        query.order("-updatedAt");
+        query.findObjects(new FindListener<Friend>() {
+            @Override
+            public void done(List<Friend> list, BmobException e) {
+                if(list.size() == 1){
+                    friend.delete(list.get(0).getObjectId(),listener);
+                }
+            }
+        });
     }
     /**
      * TODO 用户管理：2.4、获取当前用户
@@ -420,6 +421,7 @@ public class UserModel extends BaseModel {
                             Friend friend = list.get(i);
                             // 汉字转换成拼音
                             User friendUser = friend.getFriendUser();
+                            friendUser.setFriendsId(friend.getObjectId());//保存Friend表的ID
                             String username = friendUser.getUsername();//改变了(获取Nick来排序)
                             if (username != null) {
                                 String pinyin = characterParser.getSelling(friendUser.getNick());//出现空指针(忘记New了)改变了(获取Nick来排序)

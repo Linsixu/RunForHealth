@@ -8,6 +8,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import java.util.ArrayList;
@@ -23,7 +24,7 @@ import magic.cn.health.utils.MyLog;
  * @since 2018/3/15
  */
 
-public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder> {
+public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder>{
 
     private List<User> listUser;
 
@@ -31,12 +32,19 @@ public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder> {
 
     private StartModel startModel;
 
+
+    private  DeleteUserListener deleteUserListener = null;
+
     public UserFriendAdapter(Context context) {
         startModel = new StartModel(context);
 
         inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
         listUser = new ArrayList<>();
+    }
+
+    public interface DeleteUserListener{
+        public void onClick(View v,int position);
     }
 
     @Override
@@ -47,7 +55,7 @@ public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder> {
     }
 
     @Override
-    public void onBindViewHolder(BindingViewHolder holder, int position) {
+    public void onBindViewHolder(BindingViewHolder holder, final int position) {
         final User user = listUser.get(position);
         holder.getBinding().setVariable(magic.cn.health.BR.user,user);
         holder.getBinding().setVariable(magic.cn.health.BR.presenter,startModel);
@@ -63,6 +71,14 @@ public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder> {
         } else {
             tv_alpha.setVisibility(View.GONE);
         }
+        RelativeLayout layout = holder.itemView.findViewById(R.id.layout_user_friend);
+        layout.setOnLongClickListener(new View.OnLongClickListener() {
+            @Override
+            public boolean onLongClick(View view) {
+                if(deleteUserListener!=null)deleteUserListener.onClick(view,position);
+                return false;
+            }
+        });
     }
 
     @Override
@@ -107,5 +123,9 @@ public class UserFriendAdapter extends RecyclerView.Adapter<BindingViewHolder> {
             }
         }
         return -1;
+    }
+
+    public void setDeleteUserListener(DeleteUserListener deleteUserListener) {
+        this.deleteUserListener = deleteUserListener;
     }
 }
